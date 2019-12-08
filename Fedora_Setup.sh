@@ -6,33 +6,26 @@ if [[ $(/usr/bin/id -u) -ne 0 ]]; then
     exit
 fi
 # Update Files
-# sudo dnf update -y
 dnf update -y
 
+# Install KDE
+dnf install @kde-desktop-environment
+
 #Install Brave
-# sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
-# sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-# sudo dnf install brave-browser -y
 dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
 rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 dnf install brave-browser -y
 
 #Install vscode
-# sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-# sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-# sudo dnf check-update
-# sudo dnf install code -y
 rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 dnf check-update
 dnf install code -y
 
 # Remove unwanted packages
-# sudo dnf remove firefox kmahjongg kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
 dnf remove firefox kmahjongg kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
 
 # Install git, redshift
-# sudo dnf install git flatpak redshift libreoffice -y
 dnf install git flatpak redshift libreoffice simple-scan plasma-applet-redshift-control -y
 
 #Enable Flatpak
