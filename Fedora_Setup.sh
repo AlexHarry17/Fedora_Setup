@@ -9,7 +9,7 @@ fi
 dnf update -y
 
 # Install KDE
-dnf install @kde-desktop-environment
+dnf install @kde-desktop-environment -y
 
 #Install Brave
 dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
