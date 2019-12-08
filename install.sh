@@ -21,7 +21,7 @@ sudo dnf install code -y
 sudo dnf remove firefox kmahjongg kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
 
 # Install git, redshift
-sudo dnf install git flatpak redshift libreoffice simple-scan plasma-applet-redshift-control -y
+sudo dnf install git flatpak redshift libreoffice simple-scan plasma-applet-redshift-control redshift-gtk -y
 
 #Enable Flatpak
 echo '----------Enable Flatpak----------'
