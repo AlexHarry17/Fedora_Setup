@@ -35,7 +35,7 @@ echo '
 ---------- Installing wanted packages ----------
 '
 
-sudo zypper install -y git flatpak MozillaThunderbird
+sudo zypper install -y git flatpak MozillaThunderbird chromium
 
 #Enable Flatpak
 echo '
@@ -47,7 +47,7 @@ sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub
 echo '
 ---------- Installing Spotify ----------
 '
-sudo flatpak install flathub com.spotify.Client
+sudo flatpak install -y flathub com.spotify.Client
 
 mkdir ~/Desktop/Programs/
 
