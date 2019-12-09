@@ -4,42 +4,50 @@
 lookandfeeltool -a 'org.kde.breezedark.desktop'
 
 # Update Files
-echo '---------- Updating packages ----------'
+echo '
+---------- Updating packages ----------
+'
 
 sudo zypper dup -y
 
-#Install Brave
-# echo '---------- Installing Brave Browser ----------'
-# 
-# sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
-# sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-# sudo dnf install brave-browser -y
-
 #Install vscode
-echo '---------- Installing VS Code ----------'
+echo '
+---------- Installing VS Code ----------
+'
 
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-sudo dnf check-update
-sudo dnf install code -y
+sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/zypp/repos.d/vscode.repo'
+sudo zypper refresh
+sudo zypper install -y code
 
 # Remove unwanted packages
-echo '---------- Removing unwanted packages ----------'
+echo '
+---------- Removing unwanted packages ----------
+'
 
-sudo dnf remove firefox kmahjongg kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
+sudo zypper rm -y MozilaFirefox kmahjongg kpat kreversi kmines ksudoku akregator kmail vlc kcm_tablet
+
+# Lock packages from reinstalling
+sudo zypper al MozilaFirefox kmahjongg kpat kreversi kmines ksudoku akregator kmail vlc kcm_tablet
 
 # Install git, redshift
-echo '---------- Installing wanted packages ----------'
+echo '
+---------- Installing wanted packages ----------
+'
 
-sudo dnf install git flatpak redshift libreoffice simple-scan plasma-applet-redshift-control redshift-gtk -y
+sudo zypper install -y git flatpak
 
 #Enable Flatpak
-echo '---------- Enable Flatpak ----------'
+echo '
+---------- Enable Flatpak ----------
+'
 sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 #Install Spotify Flatpak
-echo '---------- Installing Spotify ----------'
-sudo flatpak install flathub com.spotify.Client -y
+echo '
+---------- Installing Spotify ----------
+'
+sudo flatpak install flathub com.spotify.Client
 
 mkdir ~/Desktop/Programs/
 
@@ -55,25 +63,17 @@ CHECK="$(sha256sum -c jetbrains*.sha256)"
 echo "$CHECK"
 # Verify Jetbrains toolbox checksum
 if [[ "$(sha256sum -c jetbrains*.sha256)" == *"OK" ]]; then
-echo '---------- Jetbrains checksum OK ----------'
+echo '
+---------- Jetbrains checksum OK ----------
+'
 tar -xvf jetbrains*.tar.gz
-rm jetbrains*.tar.gz
+rm jetbrains*.tar.gz jetbrains*.sha256sum
 else
-echo '---------- BAD JETBRAINS CHECKSUM ----------'
+echo '
+---------- BAD JETBRAINS CHECKSUM ----------
+'
 exit
 fi
-
-# Set redshift temperature
-echo "
-; Global settings for redshift
-[redshift]
-; Set the day and night screen temperatures
-temp-day=4000
-temp-night=4000
-lat=45.66
-lon=111.24
-" >> ~/.config/redshift.conf
-
 
 # Add git branch to terminal
 echo "
@@ -82,19 +82,6 @@ parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 export PS1='[\u@\h] \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ '" >> ~/.bashrc
-
-
-# Install NVIDIA Drivers
-echo '----------Checking for NVIDIA Graphics ----------'
-if [[ $(lspci | grep -E "VGA|3D") == *"NVIDIA"* ]]; then
-echo '---------- NVIDIA drivers Found ----------'
-sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda vulkan xorg-x11-drv-nvidia-cuda-libs
-sudo grubby --update-kernel=ALL --args='nvidia-drm.modeset=1'
-else
-echo '---------- No NVIDIA drivers found ----------'
-fi
-
 
 
 # Reboot system
