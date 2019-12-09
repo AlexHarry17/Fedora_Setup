@@ -48,6 +48,10 @@ echo '
 ---------- Installing Spotify ----------
 '
 sudo flatpak install -y flathub com.spotify.Client
+echo '
+---------- Installing Slack ----------
+'
+sudo flatpak install -y flathub com.slack.Slack
 
 mkdir ~/Desktop/Programs/
 
