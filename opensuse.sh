@@ -25,17 +25,17 @@ echo '
 ---------- Removing unwanted packages ----------
 '
 
-sudo zypper rm -y MozilaFirefox kmahjongg kpat kreversi kmines ksudoku akregator kmail vlc kcm_tablet
+sudo zypper rm -y MozillaFirefox kmahjongg kpat kreversi kmines ksudoku akregator kmail vlc kcm_tablet
 
 # Lock packages from reinstalling
-sudo zypper al MozilaFirefox kmahjongg kpat kreversi kmines ksudoku akregator kmail vlc kcm_tablet
+sudo zypper al MozillaFirefox kmahjongg kpat kreversi kmines ksudoku akregator kmail vlc kcm_tablet
 
 # Install git, redshift
 echo '
 ---------- Installing wanted packages ----------
 '
 
-sudo zypper install -y git flatpak
+sudo zypper install -y git flatpak MozillaThunderbird
 
 #Enable Flatpak
 echo '
