@@ -23,6 +23,12 @@ sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.m
 sudo dnf check-update
 sudo dnf install code -y
 
+#Install slack
+echo '---------- Installing Slack ----------'
+
+wget 'https://downloads.slack-edge.com/linux_releases/slack-4.2.0-0.1.fc21.x86_64.rpm'
+sudo rpm -i slack*.rpm -y
+rm slack*.rpm
 # Remove unwanted packages
 echo '---------- Removing unwanted packages ----------'
 
