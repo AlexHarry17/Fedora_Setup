@@ -96,7 +96,14 @@ if [[ $(lspci | grep -E "VGA|3D") == *"NVIDIA"* ]]; then
 echo '---------- NVIDIA drivers Found ----------'
 sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda vulkan xorg-x11-drv-nvidia-cuda-libs
+sudo dnf update -y
 sudo grubby --update-kernel=ALL --args='nvidia-drm.modeset=1'
+
+sudo dnf config-manager --add-repo http://developer.download.nvidia.com/compute/cuda/repos/fedora29/x86_64/cuda-fedora29.repo
+sudo dnf clean all
+sudo dnf install cuda
+sudo dnf install https://developer.download.nvidia.com/compute/machine-learning/repos/rhel7/x86_64/nvidia-machine-learning-repo-rhel7-1.0.0-1.x86_64.rpm
+sudo dnf install libcudnn7 libcudnn7-devel libnccl libnccl-devel
 else
 echo '---------- No NVIDIA drivers found ----------'
 fi
