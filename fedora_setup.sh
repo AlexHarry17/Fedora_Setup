@@ -37,7 +37,7 @@ sudo dnf remove firefox kmahjongg kpat kmines kruler falkon kmail ktorrent k3b c
 # Install git, redshift
 echo '---------- Installing wanted packages ----------'
 
-sudo dnf install git flatpak redshift libreoffice simple-scan plasma-applet-redshift-control redshift-gtk -y
+sudo dnf install git thunderbird flatpak redshift libreoffice simple-scan plasma-applet-redshift-control -y
 
 #Enable Flatpak
 echo '---------- Enable Flatpak ----------'
@@ -68,17 +68,6 @@ else
 echo '---------- BAD JETBRAINS CHECKSUM ----------'
 exit
 fi
-
-# Set redshift temperature
-echo "
-; Global settings for redshift
-[redshift]
-; Set the day and night screen temperatures
-temp-day=4000
-temp-night=4000
-lat=45.66
-lon=111.24
-" >> ~/.config/redshift.conf
 
 
 # Add git branch to terminal
