@@ -35,7 +35,7 @@ echo '
 ---------- Installing wanted packages ----------
 '
 
-sudo zypper install -y git flatpak MozillaThunderbird chromium
+sudo zypper install -y git flatpak MozillaThunderbird chromium dkms
 
 #Enable Flatpak
 echo '
@@ -88,6 +88,20 @@ parse_git_branch() {
 export PS1='[\u@\h] \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ '" >> ~/.bashrc
 
 
+# Install NVIDIA Drivers
+echo '----------Checking for NVIDIA Graphics ----------'
+if [[ $(sudo lspci | grep -E "VGA|3D") == *"NVIDIA"* ]]; then
+echo '---------- NVIDIA drivers Found ----------'
+sudo zypper addrepo --refresh https://download.nvidia.com/opensuse/tumbleweed NVIDIA
+sudo zypper in <x11-video-nvidiaG05>
+else
+echo '---------- No NVIDIA drivers found ----------'
+fi
+
+
+
 # Reboot system
 echo '
----------- Installer Finished - Please Reboot ----------'
+---------- Installer Finished - Rebooting in 10 Seconds ----------'
+sleep 10
+sudo reboot
