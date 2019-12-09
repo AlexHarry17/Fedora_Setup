@@ -23,14 +23,14 @@ sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.m
 sudo dnf check-update
 sudo dnf install code -y
 
-#Install slack
-echo '---------- Installing Slack ----------'
+# #Install slack
+# echo '---------- Installing Slack ----------'
 
-wget 'https://downloads.slack-edge.com/linux_releases/slack-4.2.0-0.1.fc21.x86_64.rpm'
-sudo rpm -i slack*.rpm -y
-rm slack*.rpm
-# Remove unwanted packages
-echo '---------- Removing unwanted packages ----------'
+# wget 'https://downloads.slack-edge.com/linux_releases/slack-4.2.0-0.1.fc21.x86_64.rpm'
+# sudo rpm -i slack*.rpm -y
+# rm slack*.rpm
+# # Remove unwanted packages
+# echo '---------- Removing unwanted packages ----------'
 
 sudo dnf remove firefox kmahjongg kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
 
@@ -45,29 +45,29 @@ sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub
 
 #Install Spotify Flatpak
 echo '---------- Installing Spotify ----------'
-sudo flatpak install flathub com.spotify.Client -y
+sudo flatpak install flathub com.spotify.Client com.jetbrains.PyCharm-Community com.jetbrains.IntelliJ-IDEA-Community com.slack.Slack -y
 
 mkdir ~/Desktop/Programs/
 
-PROGRAM_FOLDER='Desktop/Programs/'
+# PROGRAM_FOLDER='Desktop/Programs/'
 
-# Get Jetbrains toolbox
-wget 'https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.16.6067.tar.gz' -P $PROGRAM_FOLDER
-wget 'https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.16.6067.tar.gz.sha256' -P $PROGRAM_FOLDER
+# # Get Jetbrains toolbox
+# wget 'https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.16.6067.tar.gz' -P $PROGRAM_FOLDER
+# wget 'https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.16.6067.tar.gz.sha256' -P $PROGRAM_FOLDER
 
-cd $PROGRAM_FOLDER
+# cd $PROGRAM_FOLDER
 
-CHECK="$(sha256sum -c jetbrains*.sha256)"
-echo "$CHECK"
-# Verify Jetbrains toolbox checksum
-if [[ "$(sha256sum -c jetbrains*.sha256)" == *"OK" ]]; then
-echo '---------- Jetbrains checksum OK ----------'
-tar -xvf jetbrains*.tar.gz
-rm jetbrains*.tar.gz
-else
-echo '---------- BAD JETBRAINS CHECKSUM ----------'
-exit
-fi
+# CHECK="$(sha256sum -c jetbrains*.sha256)"
+# echo "$CHECK"
+# # Verify Jetbrains toolbox checksum
+# if [[ "$(sha256sum -c jetbrains*.sha256)" == *"OK" ]]; then
+# echo '---------- Jetbrains checksum OK ----------'
+# tar -xvf jetbrains*.tar.gz
+# rm jetbrains*.tar.gz
+# else
+# echo '---------- BAD JETBRAINS CHECKSUM ----------'
+# exit
+# fi
 
 
 # Add git branch to terminal
