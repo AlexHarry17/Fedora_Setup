@@ -145,4 +145,4 @@ echo -n -e "\r\e[31m---------- Installer Finished - Rebooting in $countdown seco
     sleep 1
 done
 echo''
-# sudo reboot
+sudo reboot
