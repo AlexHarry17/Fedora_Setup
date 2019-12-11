@@ -163,4 +163,4 @@ echo '{
     "workbench.colorTheme": "Monokai"
 }' >> ~/.config/Code/User/settings.json
 
-# sudo reboot
+sudo reboot
