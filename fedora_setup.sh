@@ -66,7 +66,7 @@ sudo dnf remove firefox kmahjongg kpat kmines kruler falkon kmail ktorrent k3b c
 # Install git, redshift
 echo -e '\e[36m---------- Installing wanted packages ----------\e[m'
 
-sudo dnf install git thunderbird flatpak redshift libreoffice simple-scan plasma-applet-redshift-control -y
+sudo dnf install git scribus thunderbird flatpak redshift libreoffice xsane plasma-applet-redshift-control -y
 
 #Enable Flatpak
 echo -e '\e[36m---------- Enable Flatpak ----------\e[m'
@@ -138,7 +138,11 @@ fi
 # Reboot system
 echo -e '
 \e[31m--------- Do not forget to remove VS CODE telemetary ----------
-
----------- Installer Finished - Rebooting in 15 seconds ----------\e[m'
-sleep 15
-sudo reboot
+'
+for ((countdown=30; countdown>=1; countdown--))
+do
+echo -n -e "\r\e[31m---------- Installer Finished - Rebooting in $countdown seconds ----------\e[m"
+    sleep 1
+done
+echo''
+# sudo reboot
