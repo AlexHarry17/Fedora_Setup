@@ -49,9 +49,6 @@ sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.co
 sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 sudo dnf install brave-browser -y
 
-echo "[Default Applications]
-x-scheme-handler/https=brave-browser.desktop;" > ~/.config/mimeapps.list
-
 # #Install vscode
 print_good_output "Installing VS Code"
 
@@ -103,8 +100,8 @@ tar -xvf jetbrains*.tar.gz
 rm jetbrains*.tar.gz jetbrains*.sha256
 cd jetbrains*
 (./jetbrains-toolbox) & pid=$!
-(sleep 2 && kill -9 $pid) &
-sleep 3
+(sleep 6 && kill -9 $pid) &
+sleep 7
 cd ../
 else
 print_error_output "BAD JETBRAINS CHECKSUM"
