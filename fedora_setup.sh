@@ -98,11 +98,7 @@ if [[ "$(sha256sum -c jetbrains*.sha256)" == *"OK" ]]; then
 print_good_output "Jetbrains checksum OK"
 tar -xvf jetbrains*.tar.gz
 rm jetbrains*.tar.gz jetbrains*.sha256
-cd jetbrains*
-(./jetbrains-toolbox) & pid=$!
-(sleep 6 && kill -9 $pid) &
-sleep 7
-cd ../
+
 else
 print_error_output "BAD JETBRAINS CHECKSUM"
 print_error_output "Jetbrains toolbox will not install."
@@ -125,12 +121,6 @@ parse_git_branch() {
 }
 export PS1='[\u@\h] \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ '" >> ~/.bashrc
 
-echo "{
-    "files.autoSave": "afterDelay",
-    "telemetry.enableCrashReporter": false,
-    "telemetry.enableTelemetry": false,
-    "workbench.colorTheme": "Monokai"
-}" >> ~/.config/Code/User/settings.json
 
 
 # Install NVIDIA Drivers
@@ -150,11 +140,27 @@ fi
 
 
 
+
+programs_started=false
 # Reboot system
 for ((countdown=30; countdown>=1; countdown--))
 do
 echo -n -e "\r\e[31m---------- Installer Finished - Rebooting in $countdown seconds ----------\e[m"
     sleep 1
+if [ $programs_started != true ]  &&  (( countdown <= 5 )); then
+    cd jetbrains*
+    ./jetbrains-tool*
+    code
+    programs_started=true
+fi
 done
 echo''
-sudo reboot
+#VSCode Settings
+echo '{
+    "files.autoSave": "afterDelay",
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "workbench.colorTheme": "Monokai"
+}' >> ~/.config/Code/User/settings.json
+
+# sudo reboot
