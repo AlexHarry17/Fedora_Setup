@@ -66,7 +66,7 @@ rm slack*.rpm
 # Remove unwanted packages
 print_good_output "Removing unwanted packages"
 
-sudo dnf remove firefox kmahjongg kwrite kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
+sudo dnf remove firefox konqueror akregator kamoso kmouth konversation juk dragon kmahjongg kwrite kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
 
 # Install git, redshift
 print_good_output "Installing wanted packages"
