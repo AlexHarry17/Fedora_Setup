@@ -74,7 +74,7 @@ sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub
 
 #Install Spotify Flatpak
 echo -e '\e[36m---------- Installing Spotify ----------\e[m'
-sudo flatpak install flathub com.spotify.Client
+sudo flatpak install flathub com.spotify.Client -y
 
 mkdir ~/Desktop/Programs/
 
