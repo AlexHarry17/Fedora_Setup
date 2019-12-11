@@ -3,9 +3,10 @@ echo -e "\e[36mLet's Get Started with certain point release packages!\e[m
 "
 echo -e "\e[36m---------- Jetbrains Toolbox ----------\e[m
 "
-echo -e '\e[36mCopy the link address of the "direct link" button link from:' https://www.jetbrains.com/toolbox-app/download/download-thanks.html
+echo -e '\e[36mCopy the link address of the "direct link" button link from:\e[m' https://www.jetbrains.com/toolbox-app/download/download-thanks.html
 echo -e '\e[36mPaste link address here:\e[m'
 read JETBRAINS_TOOLBOX
+
 echo -e '
 \e[36mCopy the link address of the "SHA-256 checksum" button link:\e[m'
 echo -e '\e[36mPaste link address here:\e[m'
@@ -23,6 +24,7 @@ echo -e '
 '
 echo -e '\e[36mWhat is your name?:\e[m'
 read GITHUB_USER_NAME
+
 echo -e '
 \e[36mWhat is your email?:\e[m'
 read GITHUB_USER_EMAIL
@@ -54,7 +56,7 @@ sudo dnf install code -y
 echo -e '\e[36m---------- Installing Slack ----------\e[m'
 
 wget "$SLACK"
-sudo rpm -i slack*.rpm -y
+sudo rpm -i slack*.rpm
 rm slack*.rpm
 # Remove unwanted packages
 echo -e '\e[36m---------- Removing unwanted packages ----------\e[m'
@@ -78,17 +80,17 @@ mkdir ~/Desktop/Programs/
 
 PROGRAM_FOLDER='Desktop/Programs/'
 
+echo -e '\e[36m---------- Installing Jetbrains Toolbox ----------\e[m'
+
 # Get Jetbrains toolbox
 wget "$JETBRAINS_TOOLBOX" -P $PROGRAM_FOLDER
-wget "$JETBRAINS_TOOLBOX_SETUP" -P $PROGRAM_FOLDER
+wget "$JETBRAINS_TOOLBOX_CHECKSUM" -P $PROGRAM_FOLDER
 
 cd $PROGRAM_FOLDER
 
-CHECK="$(sha256sum -c jetbrains*.sha256)"
-echo -e "$CHECK\e[m"
 # Verify Jetbrains toolbox checksum
 if [[ "$(sha256sum -c jetbrains*.sha256)" == *"OK" ]]; then
-echo '\e[36m---------- Jetbrains checksum OK ----------\e[m'
+echo -e '\e[36m---------- Jetbrains checksum OK ----------\e[m'
 tar -xvf jetbrains*.tar.gz
 rm jetbrains*.tar.gz jetbrains*.sha256
 else
@@ -125,10 +127,6 @@ sudo dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfre
 sudo dnf install akmod-nvidia xorg-x11-drv-nvidia-cuda vulkan xorg-x11-drv-nvidia-cuda-libs
 sudo dnf update -y
 sudo grubby --update-kernel=ALL --args='nvidia-drm.modeset=1'
-
-sudo dnf config-manager --add-repo http://developer.download.nvidia.com/compute/cuda/repos/fedora29/x86_64/cuda-fedora29.repo
-sudo dnf clean all
-sudo dnf install cuda
 sudo dnf install https://developer.download.nvidia.com/compute/machine-learning/repos/rhel7/x86_64/nvidia-machine-learning-repo-rhel7-1.0.0-1.x86_64.rpm
 sudo dnf install libcudnn7 libcudnn7-devel libnccl libnccl-devel
 else
@@ -139,6 +137,8 @@ fi
 
 # Reboot system
 echo -e '
-\e[36m--------- Do not forget to remove VS CODE telemetary ----------
----------- Installer Finished - Please Reboot ----------\e[m'
+\e[31m--------- Do not forget to remove VS CODE telemetary ----------
 
+---------- Installer Finished - Rebooting in 15 seconds ----------\e[m'
+sleep 15
+sudo reboot
