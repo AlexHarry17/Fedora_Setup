@@ -50,7 +50,6 @@ sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 sudo dnf install brave-browser -y
 
 echo "[Default Applications]
-x-scheme-handler/http=brave-browser.desktop;
 x-scheme-handler/https=brave-browser.desktop;" > ~/.config/mimeapps.list
 
 # #Install vscode
