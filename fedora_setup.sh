@@ -82,15 +82,17 @@ print_good_output "Installing Slack"
 wget "$SLACK"
 sudo rpm -i slack*.rpm
 rm slack*.rpm
-# Remove unwanted packages
-print_good_output "Removing unwanted packages"
-
-sudo dnf remove firefox konqueror akregator kamoso kmouth konversation juk dragon kmahjongg kwrite kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
 
 # Install git, redshift
 print_good_output "Installing wanted packages"
 
 sudo dnf install @kde-desktop-environment git scribus thunderbird flatpak redshift libreoffice xsane plasma-applet-redshift-control -y
+
+# Remove unwanted packages
+print_good_output "Removing unwanted packages"
+
+sudo dnf remove cheese gnome-maps rythmbox firefox konqueror akregator kamoso kmouth konversation juk dragon kmahjongg kwrite kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
+
 
 #Enable Flatpak
 print_good_output "Enable Flatpak"
@@ -188,3 +190,4 @@ echo '{
 }' >> ~/.config/Code/User/settings.json
 
 sudo reboot
+
