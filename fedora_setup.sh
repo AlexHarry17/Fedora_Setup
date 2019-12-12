@@ -55,10 +55,6 @@ else
 print_error_output "Enter 'y' for yes or 'n' for no"
 fi
 
-
-# Set to breeze theme
-lookandfeeltool -a 'org.kde.breezedark.desktop'
-
 # Update Files
 print_good_output "Updating packages"
 
@@ -93,7 +89,7 @@ sudo dnf remove firefox konqueror kcalc akregator kamoso kmouth konversation juk
 # Install git, redshift
 print_good_output "Installing wanted packages"
 
-sudo dnf install git scribus gnome-calculator thunderbird flatpak redshift libreoffice xsane plasma-applet-redshift-control -y
+sudo dnf install @kde-desktop-environment git scribus gnome-calculator thunderbird flatpak redshift libreoffice xsane plasma-applet-redshift-control -y
 
 #Enable Flatpak
 print_good_output "Enable Flatpak"
