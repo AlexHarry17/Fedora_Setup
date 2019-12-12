@@ -77,22 +77,12 @@ echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable ma
 sudo apt update
 sudo apt install brave-browser -y
 
-# #Install vscode
-print_good_output "Installing VS Code"
-
-curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
-sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-sudo apt-get install apt-transport-https -y
-sudo apt-get update
-sudo apt-get install code -y # or code-insiders
-
 #Install slack
 print_good_output "Getting Slack"
 
 wget "$SLACK"
 sudo apt update
-sudo apt install slack*.deb -y
+sudo dpkg -i ~/*/slack*.deb -y
 
 
 
@@ -169,6 +159,17 @@ sudo bash linux-brprinter-installer-*.*.*-* $BROTHER_MODEL
 rm linux-brprinter-installer* brscan*.deb cupswrapper*.deb mfc*.deb
 fi
 
+# #Install vscode
+print_good_output "Installing VS Code"
+
+curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+sudo apt-get install apt-transport-https -y
+sudo apt-get update
+sudo apt-get install code -y # or code-insiders
+
+
 # Add redshift settings
 
 echo '[redshift]
@@ -217,8 +218,16 @@ lon=1
 [randr]
 screen=0' > ~/.config/redshift.conf
 
-#Add min/max icons
+# Tweak Settings
 gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
+gsettings reset org.gnome.shell.extensions.dash-to-dock dash-max-icon-size
+gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
+gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items true
+git config --global credential.helper cache
+git config --global credential.helper "cache --timeout=3600"
+
+
 
 sudo apt-get update && sudo apt-get upgrade && sudo apt-get autoremove -y
 sudo apt update && sudo apt upgrade && sudo apt autoremove -y
