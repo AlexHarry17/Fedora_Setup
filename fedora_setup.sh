@@ -84,12 +84,12 @@ rm slack*.rpm
 # Remove unwanted packages
 print_good_output "Removing unwanted packages"
 
-sudo dnf remove firefox konqueror kcalc akregator kamoso kmouth konversation juk dragon kmahjongg kwrite kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
+sudo dnf remove firefox konqueror akregator kamoso kmouth konversation juk dragon kmahjongg kwrite kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
 
 # Install git, redshift
 print_good_output "Installing wanted packages"
 
-sudo dnf install @kde-desktop-environment git scribus gnome-calculator thunderbird flatpak redshift libreoffice xsane plasma-applet-redshift-control -y
+sudo dnf install @kde-desktop-environment git scribus thunderbird flatpak redshift libreoffice xsane plasma-applet-redshift-control -y
 
 #Enable Flatpak
 print_good_output "Enable Flatpak"
