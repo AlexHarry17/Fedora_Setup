@@ -63,6 +63,7 @@ sudo apt update
 sudo apt upgrade -y --allow-downgrades
 
 # Remove unwanted packages
+sudo apt autoremove -y
 print_good_output "Removing unwanted packages"
 
 sudo apt-get --purge remove firefox -y 
@@ -70,7 +71,7 @@ sudo apt-get --purge remove firefox -y
 #Install Brave
 print_good_output "Installing Brave Browser"
 
-sudo apt install apt-transport-https curl
+sudo apt install apt-transport-https curl -y
 curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
 echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 sudo apt update
@@ -83,12 +84,15 @@ curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > package
 sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
 sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
 sudo apt-get install apt-transport-https -y
+sudo apt-get update
+sudo apt-get install code -y # or code-insiders
 
 #Install slack
 print_good_output "Getting Slack"
 
 wget "$SLACK"
-
+sudo apt update
+sudo apt install slack*.deb -y
 
 
 
@@ -100,10 +104,10 @@ echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sou
 print_good_output "Installing wanted packages"
 
 sudo apt update
-sudo apt install synaptic gnome-tweaks gnome-shell-extension-ubuntu-dock slack*.deb -y
+sudo apt install synaptic gnome-tweaks gnome-shell-extension-ubuntu-dock -y
 rm slack*.deb
 
-sudo apt-get update && sudo apt-get install redshift redshift-gtk scribus spotify-client plasma-applet-redshift-control code -y
+sudo apt-get update && sudo apt-get install redshift redshift-gtk scribus spotify-client plasma-applet-redshift-control -y
 
 
 mkdir ~/Desktop/Programs/
