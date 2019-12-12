@@ -99,6 +99,7 @@ sudo apt install slack*.deb -y
 #Install Spotify 
 curl -sS https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add - 
 echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+sudo apt-get update && sudo apt-get install spotify-client
 
 # Install git, redshift
 print_good_output "Installing wanted packages"
@@ -107,7 +108,7 @@ sudo apt update
 sudo apt install synaptic gnome-tweaks gnome-shell-extension-ubuntu-dock -y
 rm slack*.deb
 
-sudo apt-get update && sudo apt-get install redshift redshift-gtk scribus spotify-client plasma-applet-redshift-control -y
+sudo apt-get update && sudo apt-get install redshift redshift-gtk scribus -y
 
 
 mkdir ~/Desktop/Programs/
@@ -218,6 +219,9 @@ screen=0' > ~/.config/redshift.conf
 
 #Add min/max icons
 gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
+
+sudo apt-get update && sudo apt-get upgrade && sudo apt-get autoremove -y
+sudo apt update && sudo apt upgrade && sudo apt autoremove -y
 
 programs_started=false
 # Reboot system
