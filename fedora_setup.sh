@@ -54,7 +54,10 @@ break
 else
 print_error_output "Enter 'y' for yes or 'n' for no"
 fi
-done
+
+
+# Set to breeze theme
+lookandfeeltool -a 'org.kde.breezedark.desktop'
 
 # Update Files
 print_good_output "Updating packages"
@@ -82,17 +85,15 @@ print_good_output "Installing Slack"
 wget "$SLACK"
 sudo rpm -i slack*.rpm
 rm slack*.rpm
+# Remove unwanted packages
+print_good_output "Removing unwanted packages"
+
+sudo dnf remove firefox kmag konqueror akregator kamoso kmouth konversation juk dragon kmahjongg kwrite kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
 
 # Install git, redshift
 print_good_output "Installing wanted packages"
 
-sudo dnf install @kde-desktop-environment gnome-tweaks gnome-shell-extension-dash-to-dock git scribus thunderbird flatpak redshift libreoffice xsane plasma-applet-redshift-control -y
-
-# Remove unwanted packages
-print_good_output "Removing unwanted packages"
-
-sudo dnf remove cheese kcalc gnome-maps rythmbox firefox konqueror akregator kamoso kmouth konversation juk dragon kmahjongg kwrite kpat kmines kruler falkon kmail ktorrent k3b calligra-* -y
-
+sudo dnf install git scribus thunderbird flatpak redshift libreoffice xsane plasma-applet-redshift-control -y
 
 #Enable Flatpak
 print_good_output "Enable Flatpak"
@@ -180,12 +181,7 @@ if [ $programs_started != true ]  &&  (( countdown <= 5 )); then
     programs_started=true
 fi
 done
-#Tweaks
-gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
-gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
-gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode FIXED
-gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 64
-gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items true
+echo''
 #VSCode Settings
 echo '{
     "files.autoSave": "afterDelay",
@@ -195,4 +191,3 @@ echo '{
 }' >> ~/.config/Code/User/settings.json
 
 sudo reboot
-
