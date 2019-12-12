@@ -211,6 +211,10 @@ lon=1
 ; Note that the numbering starts from 0, so this is actually the second screen.
 [randr]
 screen=0' > ~/.config/redshift.conf
+
+#Add min/max icons
+gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
+
 programs_started=false
 # Reboot system
 for ((countdown=30; countdown>=1; countdown--))
