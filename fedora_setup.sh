@@ -54,6 +54,7 @@ break
 else
 print_error_output "Enter 'y' for yes or 'n' for no"
 fi
+done
 
 
 # Set to breeze theme
