@@ -100,7 +100,7 @@ echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sou
 print_good_output "Installing wanted packages"
 
 sudo apt update
-sudo apt install synaptic slack*.deb -y
+sudo apt install synaptic gnome-tweaks gnome-shell-extension-ubuntu-dock slack*.deb -y
 rm slack*.deb
 
 sudo apt-get update && sudo apt-get install redshift redshift-gtk scribus spotify-client plasma-applet-redshift-control code -y
@@ -233,4 +233,4 @@ echo '{
     "workbench.colorTheme": "Monokai"
 }' >> ~/.config/Code/User/settings.json
 
-sudo reboot
+reboot
