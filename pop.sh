@@ -21,11 +21,11 @@ echo -e '
 echo -e '\e[36mPaste link address here:\e[m'
 read JETBRAINS_TOOLBOX_CHECKSUM
 
-print_good_output "Slack"
+#print_good_output "Slack"
 
-echo -e '\e[36mCopy the link address of the "Try again" button link from:\e[m' https://slack.com/downloads/instructions/ubuntu
-echo -e '\e[36mPaste link address here:\e[m'
-read SLACK
+#echo -e '\e[36mCopy the link address of the "Try again" button link from:\e[m' https://slack.com/#downloads/instructions/ubuntu
+#echo -e '\e[36mPaste link address here:\e[m'
+#read SLACK
 
 print_good_output "Github Setup"
 print_good_output "What is your name?:"
@@ -88,7 +88,7 @@ print_good_output "Installing wanted packages"
 
 sudo apt update
 sudo apt install synaptic gconf2 libappindicator1 gnome-tweaks gnome-shell-extension-ubuntu-dock -y
-rm slack*.deb
+
 
 sudo apt-get update && sudo apt-get install redshift redshift-gtk scribus -y
 
@@ -164,8 +164,8 @@ print_good_output "Installing VS Code"
 
 #Error with download, using snap
 sudo apt update
-sudo apt install snapd -y
-sudo snap install code --classic -y
+sudo apt install snapd
+sudo snap install code --classic
 
 # Install slack
 
@@ -184,12 +184,10 @@ echo '[redshift]
 ; Set the day and night screen temperatures
 temp-day=4000
 temp-night=4000
-
 ; Enable/Disable a smooth transition between day and night
 ; 0 will cause a direct change from day to night screen temperature.
 ; 1 will gradually increase or decrease the screen temperature
 transition=1
-
 ; Set the screen brightness. Default is 1.0
 ;brightness=0.9
 ; It is also possible to use different settings for day and night since version 1.8.
@@ -197,27 +195,23 @@ transition=1
 ;brightness-night=0.4
 ; Set the screen gamma (for all colors, or each color channel individually)
 gamma=0.9
-
 ;gamma=0.8:0.7:0.8
 ; Set the location-provider: 'geoclue', 'gnome-clock', 'manual'
 ; type 'redshift -l list' to see possible values
 ; The location provider settings are in a different section.
 location-provider=manual
-
 ; Set the adjustment-method: 'randr', 'vidmode'
 ; type 'redshift -m list' to see all possible values
 ; 'randr' is the preferred method, 'vidmode' is an older API
 ; but works in some cases when 'randr' does not.
 ; The adjustment method settings are in a different section.
 adjustment-method=randr
-
 ; Configuration of the location-provider:
 ; type 'redshift -l PROVIDER:help' to see the settings
 ; e.g. 'redshift -l manual:help'
 [manual]
 lat=43
 lon=1
-
 ; Configuration of the adjustment-method
 ; type 'redshift -m METHOD:help' to see the settings
 ; ex: 'redshift -m randr:help'
