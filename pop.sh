@@ -226,8 +226,7 @@ gsettings reset org.gnome.shell.extensions.dash-to-dock dash-max-icon-size
 gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
 gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
 gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items true
-gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
-gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'previews'
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
 gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
 
 git config --global credential.helper cache
