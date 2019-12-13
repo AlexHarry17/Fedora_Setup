@@ -246,6 +246,7 @@ echo -n -e "\r\e[31m---------- Installer Finished - Rebooting in $countdown seco
 if [ $programs_started != true ]  &&  (( countdown <= 5 )); then
     cd jetbrains*
     ./jetbrains-tool*
+    snap run code
     programs_started=true
 fi
 done
