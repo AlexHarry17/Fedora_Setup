@@ -21,11 +21,11 @@ echo -e '
 echo -e '\e[36mPaste link address here:\e[m'
 read JETBRAINS_TOOLBOX_CHECKSUM
 
-#print_good_output "Slack"
+print_good_output "Slack"
 
-#echo -e '\e[36mCopy the link address of the "Try again" button link from:\e[m' https://slack.com/#downloads/instructions/ubuntu
-#echo -e '\e[36mPaste link address here:\e[m'
-#read SLACK
+echo -e '\e[36mCopy the link address of the "Try again" button link from:\e[m' https://slack.com/downloads/instructions/ubuntu
+echo -e '\e[36mPaste link address here:\e[m'
+read SLACK
 
 print_good_output "Github Setup"
 print_good_output "What is your name?:"
@@ -182,14 +182,11 @@ sudo snap install code --classic
 
 # Install slack
 
-# print_good_output "Getting Slack"
-
-# wget "$SLACK"
-# sudo apt update
-# sudo dpkg -i ~/slack*.deb
-# Error with package dependencies
 print_good_output "Getting Slack"
-sudo snap install slack --classic
+cd
+wget "$SLACK"
+sudo apt update
+sudo apt install slack*.deb -y
 
 # Add redshift settings
 
