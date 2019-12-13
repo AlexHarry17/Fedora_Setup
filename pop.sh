@@ -228,6 +228,8 @@ gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
 gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items true
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'previews'
+gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
+
 git config --global credential.helper cache
 git config --global credential.helper "cache --timeout=3600"
 
@@ -245,7 +247,6 @@ echo -n -e "\r\e[31m---------- Installer Finished - Rebooting in $countdown seco
 if [ $programs_started != true ]  &&  (( countdown <= 5 )); then
     cd jetbrains*
     ./jetbrains-tool*
-    code
     programs_started=true
 fi
 done
