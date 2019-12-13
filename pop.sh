@@ -116,6 +116,19 @@ print_error_output "Jetbrains toolbox will not install."
 fi
 
 rm jetbrains*.tar.gz jetbrains*.sha256
+# Remove jetbrians-toolbox autostart
+rm ~/.config/autostart/jetbrains*.desktop
+
+echo '[Desktop Entry]
+Type=Application
+Exec=redshift-gtk && disown
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Redshift
+Name=Redshift
+Comment[en_US]=Starts up redshift
+Comment=Starts up redshift' > ~/.config/autostart/redshift-gtk.desktop
 
 # Setup git user
 git config --global user.name "$GITHUB_USER_NAME"
@@ -219,6 +232,19 @@ lon=1
 ; Note that the numbering starts from 0, so this is actually the second screen.
 [randr]
 screen=0' > ~/.config/redshift.conf
+
+#Start red shift on machine start
+echo '[Desktop Entry]
+Type=Application
+Exec=redshift-gtk && disown
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Redshift
+Name=Redshift
+Comment[en_US]=Starts up redshift
+Comment=Starts up redshift' > ~/.config/autostart/redshift-gtk.desktop
+
 
 # Tweak Settings
 gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"

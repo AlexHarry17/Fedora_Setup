@@ -1,8 +1,11 @@
 #!/bin/bash
-for ((countdown=10; countdown>=1; countdown--))
-do
-echo -n -e "\r\e[31m---------- Installer Finished - Rebooting in $countdown seconds ----------\e[m"
-    sleep 1
-done
-echo''
-# sudo reboot
+echo '[Desktop Entry]
+Type=Application
+Exec=redshift-gtk && disown
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Redshift
+Name=Redshift
+Comment[en_US]=Starts up redshift
+Comment=Starts up redshift' > ~/.config/autostart/redshift-gtk.desktop
