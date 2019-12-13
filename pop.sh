@@ -66,7 +66,7 @@ sudo apt upgrade -y --allow-downgrades
 sudo apt autoremove -y
 print_good_output "Removing unwanted packages"
 
-sudo apt-get --purge remove firefox -y 
+sudo apt-get --purge remove firefox geary -y 
 
 #Install Brave
 print_good_output "Installing Brave Browser"
@@ -87,7 +87,7 @@ sudo apt-get update && sudo apt-get install spotify-client -y
 print_good_output "Installing wanted packages"
 
 sudo apt update
-sudo apt install synaptic gconf2 libappindicator1 gnome-tweaks gnome-shell-extension-ubuntu-dock -y
+sudo apt install synaptic thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
 
 
 sudo apt-get update && sudo apt-get install redshift redshift-gtk scribus -y
