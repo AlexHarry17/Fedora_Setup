@@ -181,13 +181,12 @@ sudo apt install snapd
 sudo snap install code --classic
 
 # Install slack
-
+sudo apt update
 print_good_output "Getting Slack"
 cd
 wget "$SLACK"
-sudo apt update
-sudo apt install slack*.deb -y
-
+sudo dpkg -i slack*.deb
+rm slack*.deb
 # Add redshift settings
 
 echo '[redshift]

@@ -1,11 +1,6 @@
 #!/bin/bash
-echo '[Desktop Entry]
-Type=Application
-Exec=redshift-gtk && disown
-Hidden=false
-NoDisplay=false
-X-GNOME-Autostart-enabled=true
-Name[en_US]=Redshift
-Name=Redshift
-Comment[en_US]=Starts up redshift
-Comment=Starts up redshift' > ~/.config/autostart/redshift-gtk.desktop
+sudo apt update
+cd
+wget 'https://downloads.slack-edge.com/linux_releases/slack-desktop-4.2.0-amd64.deb' 
+sudo dpkg -i slack*.deb
+rm slack*.deb
