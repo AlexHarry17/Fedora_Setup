@@ -77,24 +77,17 @@ echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable ma
 sudo apt update
 sudo apt install brave-browser -y
 
-#Install slack
-print_good_output "Getting Slack"
-
-wget "$SLACK"
-sudo apt update
-sudo dpkg -i ~/slack*.deb
-
 
 #Install Spotify 
 curl -sS https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add - 
 echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-sudo apt-get update && sudo apt-get install spotify-client
+sudo apt-get update && sudo apt-get install spotify-client -y
 
 # Install git, redshift
 print_good_output "Installing wanted packages"
 
 sudo apt update
-sudo apt install synaptic gnome-tweaks gnome-shell-extension-ubuntu-dock -y
+sudo apt install synaptic gconf2 libappindicator1 gnome-tweaks gnome-shell-extension-ubuntu-dock -y
 rm slack*.deb
 
 sudo apt-get update && sudo apt-get install redshift redshift-gtk scribus -y
@@ -161,13 +154,29 @@ fi
 # #Install vscode
 print_good_output "Installing VS Code"
 
-curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
-sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-sudo apt-get install apt-transport-https -y
-sudo apt-get update
-sudo apt-get install code -y # or code-insiders
+# curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+# sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+# sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+# sudo apt-get install apt-transport-https -y
+# sudo apt-get update
+# sudo apt-get install code -y # or code-insiders
+# sudo apt-get update
 
+#Error with download, using snap
+sudo apt update
+sudo apt install snapd -y
+sudo snap install code --classic -y
+
+# Install slack
+
+# print_good_output "Getting Slack"
+
+# wget "$SLACK"
+# sudo apt update
+# sudo dpkg -i ~/slack*.deb
+# Error with package dependencies
+print_good_output "Getting Slack"
+sudo snap install slack --classic
 
 # Add redshift settings
 
@@ -255,5 +264,6 @@ echo '{
     "workbench.colorTheme": "Monokai"
 }' >> ~/.config/Code/User/settings.json
 
-reboot
 
+
+reboot
