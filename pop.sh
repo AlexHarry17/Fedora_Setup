@@ -1,5 +1,7 @@
 #!/bin/bash
-
+cd ~/.config
+mkdir autostart
+cd
 print_good_output () {
 echo -e "\e[36m---------- $1 ----------\e[m
 "
@@ -87,7 +89,7 @@ sudo apt-get update && sudo apt-get install spotify-client -y
 print_good_output "Installing wanted packages"
 
 sudo apt update
-sudo apt install synaptic thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
+sudo apt install synaptic gconf2 libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
 
 
 sudo apt-get update && sudo apt-get install redshift redshift-gtk scribus -y
@@ -118,17 +120,6 @@ fi
 rm jetbrains*.tar.gz jetbrains*.sha256
 # Remove jetbrians-toolbox autostart
 rm ~/.config/autostart/jetbrains*.desktop
-
-echo '[Desktop Entry]
-Type=Application
-Exec=redshift-gtk && disown
-Hidden=false
-NoDisplay=false
-X-GNOME-Autostart-enabled=true
-Name[en_US]=Redshift
-Name=Redshift
-Comment[en_US]=Starts up redshift
-Comment=Starts up redshift' > ~/.config/autostart/redshift-gtk.desktop
 
 # Setup git user
 git config --global user.name "$GITHUB_USER_NAME"
@@ -229,19 +220,6 @@ lon=1
 [randr]
 screen=0' > ~/.config/redshift.conf
 
-#Start red shift on machine start
-echo '[Desktop Entry]
-Type=Application
-Exec=redshift-gtk && disown
-Hidden=false
-NoDisplay=false
-X-GNOME-Autostart-enabled=true
-Name[en_US]=Redshift
-Name=Redshift
-Comment[en_US]=Starts up redshift
-Comment=Starts up redshift' > ~/.config/autostart/redshift-gtk.desktop
-
-
 # Tweak Settings
 gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
 gsettings reset org.gnome.shell.extensions.dash-to-dock dash-max-icon-size
@@ -266,8 +244,9 @@ do
 echo -n -e "\r\e[31m---------- Installer Finished - Rebooting in $countdown seconds ----------\e[m"
     sleep 1
 if [ $programs_started != true ]  &&  (( countdown <= 10 )); then
-    cd jetbrains*
+    cd $PROGRAM_FOLDER/jetbrains*
     ./jetbrains-tool*
+    cd
     snap run code
     programs_started=true
 fi
@@ -280,6 +259,18 @@ echo '{
     "telemetry.enableTelemetry": false,
     "workbench.colorTheme": "Monokai"
 }' >> ~/.config/Code/User/settings.json
+
+echo '[Desktop Entry]
+Type=Application
+Exec=redshift-gtk && disown
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Redshift
+Name=Redshift
+Comment[en_US]=Starts up redshift
+Comment=Starts up redshift' > ~/.config/autostart/redshift-gtk.desktop
+
 
 
 
