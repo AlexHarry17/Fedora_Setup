@@ -82,8 +82,7 @@ print_good_output "Getting Slack"
 
 wget "$SLACK"
 sudo apt update
-sudo dpkg -i ~/*/slack*.deb -y
-
+sudo dpkg -i ~/slack*.deb
 
 
 #Install Spotify 
@@ -257,3 +256,4 @@ echo '{
 }' >> ~/.config/Code/User/settings.json
 
 reboot
+
