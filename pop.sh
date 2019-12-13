@@ -92,7 +92,7 @@ sudo apt update
 sudo apt install synaptic gconf2 libdbusmenu-gtk4 libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
 
 
-sudo apt-get update && sudo apt-get install redshift redshift-gtk scribus -y
+sudo apt-get update && sudo apt-get install scribus -y
 
 
 mkdir ~/Desktop/Programs/
