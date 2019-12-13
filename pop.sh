@@ -118,8 +118,7 @@ print_error_output "Jetbrains toolbox will not install."
 fi
 
 rm jetbrains*.tar.gz jetbrains*.sha256
-# Remove jetbrians-toolbox autostart
-rm ~/.config/autostart/jetbrains*.desktop
+
 
 # Setup git user
 git config --global user.name "$GITHUB_USER_NAME"
@@ -271,6 +270,8 @@ Name=Redshift
 Comment[en_US]=Starts up redshift
 Comment=Starts up redshift' > ~/.config/autostart/redshift-gtk.desktop
 
+# Remove jetbrians-toolbox autostart
+rm ~/.config/autostart/jetbrains*.desktop
 
 
 
