@@ -219,23 +219,6 @@ rm slack*.deb
 # [randr]
 # screen=0' > ~/.config/redshift.conf
 
-# Tweak Settings
-gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
-gsettings reset org.gnome.shell.extensions.dash-to-dock dash-max-icon-size
-gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
-gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
-gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items true
-gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
-gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
-gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
-gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
-gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 04.0
-gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 03.98333333
-
-git config --global credential.helper cache
-git config --global credential.helper "cache --timeout=3600"
-
-
 
 sudo apt-get update && sudo apt-get upgrade && sudo apt-get autoremove -y
 sudo apt update && sudo apt upgrade && sudo apt autoremove -y
@@ -276,7 +259,29 @@ echo '{
 
 # Remove jetbrians-toolbox autostart
 rm ~/.config/autostart/jetbrains*.desktop
+# Tweak Settings
+gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
+gsettings reset org.gnome.shell.extensions.dash-to-dock dash-max-icon-size
+gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
+gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items true
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
+gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
+gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 04.0
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 03.98333333
+gsettings set org.gnome.desktop.interface gtk-theme Pop-dark
+gsettings set org.gnome.desktop.interface enable-animations false
+gsettings set org.gnome.desktop.interface show-battery-percentage true
+gsettings set org.gnome.desktop.notifications show-in-lock-screen true
+gsettings set org.gnome.system.location enabled false
+gsettings set org.gnome.desktop.privacy remove-old-trash-files true
+gsettings set org.gnome.desktop.privacy remove-old-temp-files true
+gsettings set org.gnome.desktop.peripherals.touchpad click-method areas
 
+git config --global credential.helper cache
+git config --global credential.helper "cache --timeout=3600"
 
 
 reboot
