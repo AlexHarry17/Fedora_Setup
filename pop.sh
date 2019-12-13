@@ -68,7 +68,7 @@ sudo apt upgrade -y --allow-downgrades
 sudo apt autoremove -y
 print_good_output "Removing unwanted packages"
 
-sudo apt-get --purge remove firefox geary -y 
+sudo apt --purge remove gedit gnome-weather firefox geary -y 
 
 #Install Brave
 print_good_output "Installing Brave Browser"
@@ -89,10 +89,7 @@ sudo apt-get update && sudo apt-get install spotify-client -y
 print_good_output "Installing wanted packages"
 
 sudo apt update
-sudo apt install synaptic gconf2 libdbusmenu-gtk4 libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
-
-
-sudo apt-get update && sudo apt-get install scribus -y
+sudo apt install synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
 
 
 mkdir ~/Desktop/Programs/
@@ -219,8 +216,6 @@ rm slack*.deb
 # [randr]
 # screen=0' > ~/.config/redshift.conf
 
-
-sudo apt-get update && sudo apt-get upgrade && sudo apt-get autoremove -y
 sudo apt update && sudo apt upgrade && sudo apt autoremove -y
 
 programs_started=false
