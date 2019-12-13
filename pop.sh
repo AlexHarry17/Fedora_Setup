@@ -179,45 +179,45 @@ sudo dpkg -i slack*.deb
 rm slack*.deb
 # Add redshift settings
 
-echo '[redshift]
-; Set the day and night screen temperatures
-temp-day=4000
-temp-night=4000
-; Enable/Disable a smooth transition between day and night
-; 0 will cause a direct change from day to night screen temperature.
-; 1 will gradually increase or decrease the screen temperature
-transition=1
-; Set the screen brightness. Default is 1.0
-;brightness=0.9
-; It is also possible to use different settings for day and night since version 1.8.
-;brightness-day=0.7
-;brightness-night=0.4
-; Set the screen gamma (for all colors, or each color channel individually)
-gamma=0.9
-;gamma=0.8:0.7:0.8
-; Set the location-provider: 'geoclue', 'gnome-clock', 'manual'
-; type 'redshift -l list' to see possible values
-; The location provider settings are in a different section.
-location-provider=manual
-; Set the adjustment-method: 'randr', 'vidmode'
-; type 'redshift -m list' to see all possible values
-; 'randr' is the preferred method, 'vidmode' is an older API
-; but works in some cases when 'randr' does not.
-; The adjustment method settings are in a different section.
-adjustment-method=randr
-; Configuration of the location-provider:
-; type 'redshift -l PROVIDER:help' to see the settings
-; e.g. 'redshift -l manual:help'
-[manual]
-lat=43
-lon=1
-; Configuration of the adjustment-method
-; type 'redshift -m METHOD:help' to see the settings
-; ex: 'redshift -m randr:help'
-; In this example, randr is configured to adjust screen 1.
-; Note that the numbering starts from 0, so this is actually the second screen.
-[randr]
-screen=0' > ~/.config/redshift.conf
+# echo '[redshift]
+# ; Set the day and night screen temperatures
+# temp-day=4000
+# temp-night=4000
+# ; Enable/Disable a smooth transition between day and night
+# ; 0 will cause a direct change from day to night screen temperature.
+# ; 1 will gradually increase or decrease the screen temperature
+# transition=1
+# ; Set the screen brightness. Default is 1.0
+# ;brightness=0.9
+# ; It is also possible to use different settings for day and night since version 1.8.
+# ;brightness-day=0.7
+# ;brightness-night=0.4
+# ; Set the screen gamma (for all colors, or each color channel individually)
+# gamma=0.9
+# ;gamma=0.8:0.7:0.8
+# ; Set the location-provider: 'geoclue', 'gnome-clock', 'manual'
+# ; type 'redshift -l list' to see possible values
+# ; The location provider settings are in a different section.
+# location-provider=manual
+# ; Set the adjustment-method: 'randr', 'vidmode'
+# ; type 'redshift -m list' to see all possible values
+# ; 'randr' is the preferred method, 'vidmode' is an older API
+# ; but works in some cases when 'randr' does not.
+# ; The adjustment method settings are in a different section.
+# adjustment-method=randr
+# ; Configuration of the location-provider:
+# ; type 'redshift -l PROVIDER:help' to see the settings
+# ; e.g. 'redshift -l manual:help'
+# [manual]
+# lat=43
+# lon=1
+# ; Configuration of the adjustment-method
+# ; type 'redshift -m METHOD:help' to see the settings
+# ; ex: 'redshift -m randr:help'
+# ; In this example, randr is configured to adjust screen 1.
+# ; Note that the numbering starts from 0, so this is actually the second screen.
+# [randr]
+# screen=0' > ~/.config/redshift.conf
 
 # Tweak Settings
 gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
@@ -227,6 +227,10 @@ gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
 gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items true
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
 gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
+gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 04.0
+gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 03.98333333
 
 git config --global credential.helper cache
 git config --global credential.helper "cache --timeout=3600"
@@ -259,16 +263,16 @@ echo '{
     "workbench.colorTheme": "Monokai"
 }' >> ~/.config/Code/User/settings.json
 
-echo '[Desktop Entry]
-Type=Application
-Exec=redshift-gtk && disown
-Hidden=false
-NoDisplay=false
-X-GNOME-Autostart-enabled=true
-Name[en_US]=Redshift
-Name=Redshift
-Comment[en_US]=Starts up redshift
-Comment=Starts up redshift' > ~/.config/autostart/redshift-gtk.desktop
+# echo '[Desktop Entry]
+# Type=Application
+# Exec=redshift-gtk && disown
+# Hidden=false
+# NoDisplay=false
+# X-GNOME-Autostart-enabled=true
+# Name[en_US]=Redshift
+# Name=Redshift
+# Comment[en_US]=Starts up redshift
+# Comment=Starts up redshift' > ~/.config/autostart/redshift-gtk.desktop
 
 # Remove jetbrians-toolbox autostart
 rm ~/.config/autostart/jetbrains*.desktop
