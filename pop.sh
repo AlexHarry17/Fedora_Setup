@@ -89,7 +89,7 @@ sudo apt-get update && sudo apt-get install spotify-client -y
 print_good_output "Installing wanted packages"
 
 sudo apt update
-sudo apt install dconf-cli uuid-runtime synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
+sudo apt install xdotool gconf-editor dconf-cli uuid-runtime synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
 
 
 mkdir ~/Desktop/Programs/
@@ -230,8 +230,12 @@ echo -n -e "\r\e[31m---------- Installer Finished - Rebooting in $countdown seco
 if [ $programs_started != true ]  &&  (( countdown <= 10 )); then
     cd $PROGRAM_FOLDER/jetbrains*
     ./jetbrains-tool*
+    sleep 1
+    xdotool windowminimize $(xdotool getactivewindow)
     cd
     snap run code
+    sleep 1
+    xdotool windowminimize $(xdotool getactivewindow)
     programs_started=true
 fi
 done
@@ -277,9 +281,11 @@ gsettings set org.gnome.system.location enabled false
 gsettings set org.gnome.desktop.privacy remove-old-trash-files true
 gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 gsettings set org.gnome.desktop.peripherals.touchpad click-method areas
+gsettings set org.gnome.shell enabled-extensions "['alt-tab-raise-first-window@system76.com', 'always-show-workspaces@system76.com', 'batteryiconfix@kylecorry31.github.io', 'donotdisturb@kylecorry31.github.io', 'pop-shop-details@system76.com', 'pop-suspend-button@system76.com', 'system76-power@system76.com', 'ubuntu-dock@ubuntu.com']"
 
 git config --global credential.helper cache
 git config --global credential.helper "cache --timeout=3600"
 
 
 reboot
+
