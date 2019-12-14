@@ -125,13 +125,13 @@ git config --global color.branch auto
 git config --global color.status auto
 
 # Add git branch to terminal
-echo "
-# Add git branch to end of terminal
-parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
-export PS1='[\u@\h] \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ '
-echo -e -n "\x1b[\x35 q" # changes to blinking bar" >> ~/.bashrc
+# echo "
+# # Add git branch to end of terminal
+# parse_git_branch() {
+#      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+# }
+# export PS1='[\u@\h] \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ '
+# echo -e -n "\x1b[\x35 q" # changes to blinking bar" >> ~/.bashrc
 
 
 
@@ -153,7 +153,6 @@ rm linux-brprinter-installer* brscan*.deb cupswrapper*.deb mfc*.deb
 fi
 
 # #Install vscode
-print_good_output "Installing VS Code"
 
 # curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 # sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
@@ -166,11 +165,13 @@ print_good_output "Installing VS Code"
 #Error with download, using snap
 sudo apt update
 sudo apt install snapd
+print_good_output "Installing VS Code"
+
 sudo snap install code --classic
 
 # Install slack
 sudo apt update
-print_good_output "Getting Slack"
+print_good_output "Installing Slack"
 cd
 wget "$SLACK"
 sudo dpkg -i slack*.deb
@@ -217,9 +218,11 @@ rm slack*.deb
 # [randr]
 # screen=0' > ~/.config/redshift.conf
 
-sudo apt update && sudo apt upgrade && sudo apt autoremove -y
-bash -c  "$(wget -qO- https://git.io/vQgMr)" << EOF
-08
+print_good_output "Installing Bash Colors"
+git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
+~/.bash_it/install.sh
+export BASH_IT_THEME='powerline' << EOF
+N
 EOF
 
 programs_started=false
@@ -289,4 +292,3 @@ git config --global credential.helper "cache --timeout=3600"
 
 
 reboot
-
