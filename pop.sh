@@ -234,11 +234,11 @@ echo -n -e "\r\e[31m---------- Installer Finished - Rebooting in $countdown seco
 if [ $programs_started != true ]  &&  (( countdown <= 10 )); then
     cd $PROGRAM_FOLDER/jetbrains*
     ./jetbrains-tool*
-    sleep 1
+    sleep 2
     xdotool windowminimize $(xdotool getactivewindow)
     cd
     snap run code
-    sleep 1
+    sleep 2
     xdotool windowminimize $(xdotool getactivewindow)
     programs_started=true
 fi
