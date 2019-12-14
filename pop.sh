@@ -1,291 +1,131 @@
-#!/bin/bash
-cd ~/.config
-mkdir autostart
-cd
-print_good_output () {
-echo -e "\e[36m---------- $1 ----------\e[m
-"
-}
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
 
-print_error_output () {
-echo -e "\e[1;31m---------- $1 ----------\033[0m
-"
-}
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
-print_good_output "Lets Get Started!"
-print_good_output "Jetbrains Toolbox"
-echo -e '\e[36mCopy the link address of the "direct link" button link from:\e[m' https://www.jetbrains.com/toolbox-app/download/download-thanks.html
-echo -e '\e[36mPaste link address here:\e[m'
-read JETBRAINS_TOOLBOX
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
 
-echo -e '
-\e[36mCopy the link address of the "SHA-256 checksum" button link:\e[m'
-echo -e '\e[36mPaste link address here:\e[m'
-read JETBRAINS_TOOLBOX_CHECKSUM
+# append to the history file, don't overwrite it
+shopt -s histappend
 
-print_good_output "Slack"
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
 
-echo -e '\e[36mCopy the link address of the "Try again" button link from:\e[m' https://slack.com/downloads/instructions/ubuntu
-echo -e '\e[36mPaste link address here:\e[m'
-read SLACK
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
 
-print_good_output "Github Setup"
-print_good_output "What is your name?:"
-read GITHUB_USER_NAME
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
 
-print_good_output "What is your email?:"
-read GITHUB_USER_EMAIL
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# Ask for brother printer install
-brother_printer=''
-echo -en "\e[36mDo you want to set up a Brother Printer? [y/n] \033[0m"
-
-while true;
-do
-read brother_printer
-if [ $brother_printer = 'y' ]; then
-echo -e '\e[36mVist the following link. Search for your model.  Choose the "Driver Install Tool".  Read and agree to the license. Copy the link address of "If your download does not start automatically, please click here.":\e[m' 'https://support.brother.com/g/b/productsearch.aspx?c=us&lang=en&content=dl'
-echo -e '\e[36mPaste link address here:\e[m'
-read BROTHER_DRIVER
-echo -e '\e[36mEnter your printer model:\e[m'
-read BROTHER_MODEL
-break
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
 fi
-if [ $brother_printer = 'n' ]; then
-break
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+#force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-print_error_output "Enter 'y' for yes or 'n' for no"
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
-done
+unset color_prompt force_color_prompt
 
-# Update Files
-print_good_output "Updating packages"
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
 
-sudo apt update
-sudo apt upgrade -y --allow-downgrades
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
 
-# Remove unwanted packages
-sudo apt autoremove -y
-print_good_output "Removing unwanted packages"
-
-sudo apt --purge remove gedit gnome-weather firefox geary -y 
-
-#Install Brave
-print_good_output "Installing Brave Browser"
-
-sudo apt install apt-transport-https curl -y
-curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
-echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-sudo apt update
-sudo apt install brave-browser -y
-
-
-#Install Spotify 
-curl -sS https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add - 
-echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-sudo apt-get update && sudo apt-get install spotify-client -y
-
-# Install git, redshift
-print_good_output "Installing wanted packages"
-
-sudo apt update
-sudo apt install xdotool gconf-editor dconf-cli uuid-runtime synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
-
-
-mkdir ~/Desktop/Programs/
-
-PROGRAM_FOLDER='Desktop/Programs/'
-
-print_good_output "Installing Jetbrains Toolbox"
-
-# Get Jetbrains toolbox
-wget "$JETBRAINS_TOOLBOX" -P $PROGRAM_FOLDER
-wget "$JETBRAINS_TOOLBOX_CHECKSUM" -P $PROGRAM_FOLDER
-
-cd $PROGRAM_FOLDER
-
-# Verify Jetbrains toolbox checksum
-if [[ "$(sha256sum -c jetbrains*.sha256)" == *"OK" ]]; then
-print_good_output "Jetbrains checksum OK"
-tar -xvf jetbrains*.tar.gz
-
-else
-print_error_output "BAD JETBRAINS CHECKSUM"
-print_error_output "Jetbrains toolbox will not install."
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
 fi
 
-rm jetbrains*.tar.gz jetbrains*.sha256
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
 
-# Setup git user
-git config --global user.name "$GITHUB_USER_NAME"
-git config --global user.email "$GITHUB_USER_EMAIL"
-git config --global color.ui auto
-git config --global color.branch auto
-git config --global color.status auto
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-# Add git branch to terminal
-echo "
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
 # Add git branch to end of terminal
 parse_git_branch() {
      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
-export PS1='[\u@\h] \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ '" >> ~/.bashrc
+export PS1='[\u@\h] \[\033[32m\]\w\[\033[33m\]$(parse_git_branch)\[\033[00m\] $ '
+echo -e -n "\x1b[\x35 q" # changes to blinking bar
 
-
-
-# Install NVIDIA Drivers
-echo -e '\e[36m----------Checking for NVIDIA Graphics ----------\e[m
-'
-if [[ $(lspci | grep -E "VGA|3D") == *"NVIDIA"* ]]; then
-print_good_output "NVIDIA drivers Found"
-sudo apt install system76-cuda-latest system76-cudnn-*.* -y
-else
-print_good_output "No NVIDIA drivers found"
-fi
-
-if [ $brother_printer = 'y' ]; then
-wget "$BROTHER_DRIVER"
-gunzip linux-brprinter-installer-*.*.*-*.gz
-sudo bash linux-brprinter-installer-*.*.*-* $BROTHER_MODEL
-rm linux-brprinter-installer* brscan*.deb cupswrapper*.deb mfc*.deb
-fi
-
-# #Install vscode
-print_good_output "Installing VS Code"
-
-# curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-# sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
-# sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-# sudo apt-get install apt-transport-https -y
-# sudo apt-get update
-# sudo apt-get install code -y # or code-insiders
-# sudo apt-get update
-
-#Error with download, using snap
-sudo apt update
-sudo apt install snapd
-sudo snap install code --classic
-
-# Install slack
-sudo apt update
-print_good_output "Getting Slack"
-cd
-wget "$SLACK"
-sudo dpkg -i slack*.deb
-rm slack*.deb
-# Add redshift settings
-
-# echo '[redshift]
-# ; Set the day and night screen temperatures
-# temp-day=4000
-# temp-night=4000
-# ; Enable/Disable a smooth transition between day and night
-# ; 0 will cause a direct change from day to night screen temperature.
-# ; 1 will gradually increase or decrease the screen temperature
-# transition=1
-# ; Set the screen brightness. Default is 1.0
-# ;brightness=0.9
-# ; It is also possible to use different settings for day and night since version 1.8.
-# ;brightness-day=0.7
-# ;brightness-night=0.4
-# ; Set the screen gamma (for all colors, or each color channel individually)
-# gamma=0.9
-# ;gamma=0.8:0.7:0.8
-# ; Set the location-provider: 'geoclue', 'gnome-clock', 'manual'
-# ; type 'redshift -l list' to see possible values
-# ; The location provider settings are in a different section.
-# location-provider=manual
-# ; Set the adjustment-method: 'randr', 'vidmode'
-# ; type 'redshift -m list' to see all possible values
-# ; 'randr' is the preferred method, 'vidmode' is an older API
-# ; but works in some cases when 'randr' does not.
-# ; The adjustment method settings are in a different section.
-# adjustment-method=randr
-# ; Configuration of the location-provider:
-# ; type 'redshift -l PROVIDER:help' to see the settings
-# ; e.g. 'redshift -l manual:help'
-# [manual]
-# lat=43
-# lon=1
-# ; Configuration of the adjustment-method
-# ; type 'redshift -m METHOD:help' to see the settings
-# ; ex: 'redshift -m randr:help'
-# ; In this example, randr is configured to adjust screen 1.
-# ; Note that the numbering starts from 0, so this is actually the second screen.
-# [randr]
-# screen=0' > ~/.config/redshift.conf
-
-sudo apt update && sudo apt upgrade && sudo apt autoremove -y
-bash -c  "$(wget -qO- https://git.io/vQgMr)" << EOF
-08
-EOF
-
-programs_started=false
-# Reboot system
-for ((countdown=30; countdown>=1; countdown--))
-do
-echo -n -e "\r\e[31m---------- Installer Finished - Rebooting in $countdown seconds ----------\e[m"
-    sleep 1
-if [ $programs_started != true ]  &&  (( countdown <= 10 )); then
-    cd $PROGRAM_FOLDER/jetbrains*
-    ./jetbrains-tool*
-    sleep 1
-    xdotool windowminimize $(xdotool getactivewindow)
-    cd
-    snap run code
-    sleep 1
-    xdotool windowminimize $(xdotool getactivewindow)
-    programs_started=true
-fi
-done
-echo''
-#VSCode Settings
-echo '{
-    "files.autoSave": "afterDelay",
-    "telemetry.enableCrashReporter": false,
-    "telemetry.enableTelemetry": false,
-    "workbench.colorTheme": "Monokai"
-}' >> ~/.config/Code/User/settings.json
-
-# echo '[Desktop Entry]
-# Type=Application
-# Exec=redshift-gtk && disown
-# Hidden=false
-# NoDisplay=false
-# X-GNOME-Autostart-enabled=true
-# Name[en_US]=Redshift
-# Name=Redshift
-# Comment[en_US]=Starts up redshift
-# Comment=Starts up redshift' > ~/.config/autostart/redshift-gtk.desktop
-
-# Remove jetbrians-toolbox autostart
-rm ~/.config/autostart/jetbrains*.desktop
-# Tweak Settings
-gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
-gsettings reset org.gnome.shell.extensions.dash-to-dock dash-max-icon-size
-gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
-gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
-gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items true
-gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize-or-previews'
-gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
-gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
-gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
-gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 04.0
-gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 03.98333333
-gsettings set org.gnome.desktop.interface gtk-theme Pop-dark
-gsettings set org.gnome.desktop.interface enable-animations false
-gsettings set org.gnome.desktop.interface show-battery-percentage true
-gsettings set org.gnome.desktop.notifications show-in-lock-screen true
-gsettings set org.gnome.system.location enabled false
-gsettings set org.gnome.desktop.privacy remove-old-trash-files true
-gsettings set org.gnome.desktop.privacy remove-old-temp-files true
-gsettings set org.gnome.desktop.peripherals.touchpad click-method areas
-gsettings set org.gnome.shell enabled-extensions "['alt-tab-raise-first-window@system76.com', 'always-show-workspaces@system76.com', 'batteryiconfix@kylecorry31.github.io', 'donotdisturb@kylecorry31.github.io', 'pop-shop-details@system76.com', 'pop-suspend-button@system76.com', 'system76-power@system76.com', 'ubuntu-dock@ubuntu.com']"
-
-git config --global credential.helper cache
-git config --global credential.helper "cache --timeout=3600"
-
-
-reboot
-
+# Add git branch to end of terminal
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+export PS1='[\u@\h] \[\033[32m\]\w\[\033[33m\]$(parse_git_branch)\[\033[00m\] $ '
+echo -e -n x1b[x35 q # changes to blinking bar
