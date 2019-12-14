@@ -160,7 +160,9 @@ rm slack*.deb
 
 print_good_output "Installing Bash Colors"
 git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
-~/.bash_it/install.sh
+~/.bash_it/install.sh <<EOF
+N
+EOF
 
 
 programs_started=false
@@ -176,7 +178,7 @@ if [ $programs_started != true ]  &&  (( countdown <= 10 )); then
     xdotool windowminimize $(xdotool getactivewindow)
     cd
     snap run code
-    sleep 6
+    sleep 4
     xdotool windowminimize $(xdotool getactivewindow)
     programs_started=true
 fi
