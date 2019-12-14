@@ -210,6 +210,7 @@ gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-automatic false
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 04.0
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to 03.98333333
+gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4000
 gsettings set org.gnome.desktop.interface gtk-theme Pop-dark
 gsettings set org.gnome.desktop.interface enable-animations false
 gsettings set org.gnome.desktop.interface show-battery-percentage true
