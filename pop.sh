@@ -174,7 +174,6 @@ cd
 snap run code
 sleep 4
 xdotool windowminimize $(xdotool getactivewindow)
-sudo apt remove xdotool -y
 sudo apt autoremove -y
 # Reboot system
 for ((countdown=30; countdown>=1; countdown--))
@@ -190,6 +189,12 @@ echo '{
     "telemetry.enableTelemetry": false,
     "workbench.colorTheme": "Monokai"
 }' >> ~/.config/Code/User/settings.json
+
+echo '[Desktop Entry]
+Type=Application
+Name=Show Desktop
+Icon=desktop
+Exec=xdotool key --clearmodifiers Super+d' >> ~/.local/share/applications/show-desktop.desktop
 
 # Remove jetbrians-toolbox autostart
 rm ~/.config/autostart/jetbrains*.desktop
@@ -214,7 +219,7 @@ gsettings set org.gnome.desktop.privacy remove-old-trash-files true
 gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 gsettings set org.gnome.desktop.peripherals.touchpad click-method areas
 gsettings set org.gnome.shell enabled-extensions "['alt-tab-raise-first-window@system76.com', 'always-show-workspaces@system76.com', 'batteryiconfix@kylecorry31.github.io', 'donotdisturb@kylecorry31.github.io', 'pop-shop-details@system76.com', 'pop-suspend-button@system76.com', 'system76-power@system76.com', 'ubuntu-dock@ubuntu.com']"
-gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'thunderbird.desktop', 'spotify.desktop', 'slack.desktop', 'jetbrains-toolbox.desktop', 'code_code.desktop', 'org.gnome.Nautilus.desktop']"
+gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'thunderbird.desktop', 'spotify.desktop', 'slack.desktop', 'jetbrains-toolbox.desktop', 'code_code.desktop', 'org.gnome.Nautilus.desktop', 'show-desktop.desktop']"
 git config --global credential.helper cache
 git config --global credential.helper "cache --timeout=3600"
 sed -i -e "s/export BASH_IT_THEME='bobby'/export BASH_IT_THEME='powerline-plain'/g" ~/.bashrc
