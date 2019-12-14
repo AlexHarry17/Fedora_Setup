@@ -116,24 +116,12 @@ fi
 
 rm jetbrains*.tar.gz jetbrains*.sha256
 
-
 # Setup git user
 git config --global user.name "$GITHUB_USER_NAME"
 git config --global user.email "$GITHUB_USER_EMAIL"
 git config --global color.ui auto
 git config --global color.branch auto
 git config --global color.status auto
-
-# Add git branch to terminal
-# echo "
-# # Add git branch to end of terminal
-# parse_git_branch() {
-#      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-# }
-# export PS1='[\u@\h] \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ '
-# echo -e -n "\x1b[\x35 q" # changes to blinking bar" >> ~/.bashrc
-
-
 
 # Install NVIDIA Drivers
 echo -e '\e[36m----------Checking for NVIDIA Graphics ----------\e[m
@@ -154,14 +142,6 @@ fi
 
 # #Install vscode
 
-# curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-# sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
-# sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-# sudo apt-get install apt-transport-https -y
-# sudo apt-get update
-# sudo apt-get install code -y # or code-insiders
-# sudo apt-get update
-
 #Error with download, using snap
 sudo apt update
 sudo apt install snapd
@@ -176,47 +156,7 @@ cd
 wget "$SLACK"
 sudo dpkg -i slack*.deb
 rm slack*.deb
-# Add redshift settings
 
-# echo '[redshift]
-# ; Set the day and night screen temperatures
-# temp-day=4000
-# temp-night=4000
-# ; Enable/Disable a smooth transition between day and night
-# ; 0 will cause a direct change from day to night screen temperature.
-# ; 1 will gradually increase or decrease the screen temperature
-# transition=1
-# ; Set the screen brightness. Default is 1.0
-# ;brightness=0.9
-# ; It is also possible to use different settings for day and night since version 1.8.
-# ;brightness-day=0.7
-# ;brightness-night=0.4
-# ; Set the screen gamma (for all colors, or each color channel individually)
-# gamma=0.9
-# ;gamma=0.8:0.7:0.8
-# ; Set the location-provider: 'geoclue', 'gnome-clock', 'manual'
-# ; type 'redshift -l list' to see possible values
-# ; The location provider settings are in a different section.
-# location-provider=manual
-# ; Set the adjustment-method: 'randr', 'vidmode'
-# ; type 'redshift -m list' to see all possible values
-# ; 'randr' is the preferred method, 'vidmode' is an older API
-# ; but works in some cases when 'randr' does not.
-# ; The adjustment method settings are in a different section.
-# adjustment-method=randr
-# ; Configuration of the location-provider:
-# ; type 'redshift -l PROVIDER:help' to see the settings
-# ; e.g. 'redshift -l manual:help'
-# [manual]
-# lat=43
-# lon=1
-# ; Configuration of the adjustment-method
-# ; type 'redshift -m METHOD:help' to see the settings
-# ; ex: 'redshift -m randr:help'
-# ; In this example, randr is configured to adjust screen 1.
-# ; Note that the numbering starts from 0, so this is actually the second screen.
-# [randr]
-# screen=0' > ~/.config/redshift.conf
 
 print_good_output "Installing Bash Colors"
 git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
@@ -236,7 +176,7 @@ if [ $programs_started != true ]  &&  (( countdown <= 10 )); then
     xdotool windowminimize $(xdotool getactivewindow)
     cd
     snap run code
-    sleep 2
+    sleep 6
     xdotool windowminimize $(xdotool getactivewindow)
     programs_started=true
 fi
@@ -249,17 +189,6 @@ echo '{
     "telemetry.enableTelemetry": false,
     "workbench.colorTheme": "Monokai"
 }' >> ~/.config/Code/User/settings.json
-
-# echo '[Desktop Entry]
-# Type=Application
-# Exec=redshift-gtk && disown
-# Hidden=false
-# NoDisplay=false
-# X-GNOME-Autostart-enabled=true
-# Name[en_US]=Redshift
-# Name=Redshift
-# Comment[en_US]=Starts up redshift
-# Comment=Starts up redshift' > ~/.config/autostart/redshift-gtk.desktop
 
 # Remove jetbrians-toolbox autostart
 rm ~/.config/autostart/jetbrains*.desktop
@@ -287,6 +216,6 @@ gsettings set org.gnome.shell enabled-extensions "['alt-tab-raise-first-window@s
 gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'thunderbird.desktop', 'spotify.desktop', 'slack.desktop', 'jetbrains-toolbox.desktop', 'code_code.desktop', 'org.gnome.Nautilus.desktop']"
 git config --global credential.helper cache
 git config --global credential.helper "cache --timeout=3600"
-
+sed -i -e "s/export BASH_IT_THEME='bobby'/export BASH_IT_THEME='powerline-plain'/g" ~/.bashrc
 
 reboot
