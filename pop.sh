@@ -89,7 +89,7 @@ sudo apt-get update && sudo apt-get install spotify-client -y
 print_good_output "Installing wanted packages"
 
 sudo apt update
-sudo apt install xdotool gconf-editor dconf-cli uuid-runtime synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
+sudo apt install xdotool git-lfs gconf-editor dconf-cli uuid-runtime synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
 
 
 mkdir ~/Desktop/Programs/
@@ -221,9 +221,7 @@ rm slack*.deb
 print_good_output "Installing Bash Colors"
 git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
 ~/.bash_it/install.sh
-export BASH_IT_THEME='powerline' << EOF
-N
-EOF
+
 
 programs_started=false
 # Reboot system
