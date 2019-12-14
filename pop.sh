@@ -89,7 +89,7 @@ sudo apt-get update && sudo apt-get install spotify-client -y
 print_good_output "Installing wanted packages"
 
 sudo apt update
-sudo apt install synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
+sudo apt install dconf-cli uuid-runtime synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
 
 
 mkdir ~/Desktop/Programs/
@@ -217,6 +217,9 @@ rm slack*.deb
 # screen=0' > ~/.config/redshift.conf
 
 sudo apt update && sudo apt upgrade && sudo apt autoremove -y
+bash -c  "$(wget -qO- https://git.io/vQgMr)" << EOF
+08
+EOF
 
 programs_started=false
 # Reboot system
