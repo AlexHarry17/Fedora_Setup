@@ -175,7 +175,7 @@ snap run code
 sleep 4
 xdotool windowminimize $(xdotool getactivewindow)
 sudo apt remove xdotool -y
-
+sudo apt autoremove -y
 # Reboot system
 for ((countdown=30; countdown>=1; countdown--))
 do
