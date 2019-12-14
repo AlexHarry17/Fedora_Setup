@@ -1,4 +1,6 @@
 #!/bin/bash
+DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+FILE=$(basename $BASH_SOURCE) 
 cd ~/.config
 mkdir autostart
 cd
@@ -89,7 +91,7 @@ sudo apt-get update && sudo apt-get install spotify-client -y
 print_good_output "Installing wanted packages"
 
 sudo apt update
-sudo apt install xdotool git-lfs gconf-editor dconf-cli uuid-runtime synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
+sudo apt install xdotool git-lfs synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock -y
 
 
 mkdir ~/Desktop/Programs/
@@ -164,24 +166,21 @@ git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
 N
 EOF
 
+cd $PROGRAM_FOLDER/jetbrains*
+./jetbrains-tool*
+sleep 2
+xdotool windowminimize $(xdotool getactivewindow)
+cd
+snap run code
+sleep 4
+xdotool windowminimize $(xdotool getactivewindow)
+sudo apt remove xdotool -y
 
-programs_started=false
 # Reboot system
 for ((countdown=30; countdown>=1; countdown--))
 do
 echo -n -e "\r\e[31m---------- Installer Finished - Rebooting in $countdown seconds ----------\e[m"
     sleep 1
-if [ $programs_started != true ]  &&  (( countdown <= 10 )); then
-    cd $PROGRAM_FOLDER/jetbrains*
-    ./jetbrains-tool*
-    sleep 2
-    xdotool windowminimize $(xdotool getactivewindow)
-    cd
-    snap run code
-    sleep 4
-    xdotool windowminimize $(xdotool getactivewindow)
-    programs_started=true
-fi
 done
 echo''
 #VSCode Settings
@@ -219,5 +218,13 @@ gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'thunderb
 git config --global credential.helper cache
 git config --global credential.helper "cache --timeout=3600"
 sed -i -e "s/export BASH_IT_THEME='bobby'/export BASH_IT_THEME='powerline-plain'/g" ~/.bashrc
+
+echo "
+# Add blinking ibeam cursor
+echo -ne '\e[5 q'
+" >> ~/.bashrc
+
+cd $DIRECTORY
+rm $FILE
 
 reboot
