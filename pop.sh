@@ -292,7 +292,7 @@ read GITHUB_USER_EMAIL
 brother_printer_setup
 initial_package_upgrade
 remove_package gedit gnome-weather firefox geary
-install_package xdotool snapd tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
+install_package xdotool gparted snapd tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
 install_package_no_recommends tlp tlp-rdw 
 install_brave_browser
 install_spotify
