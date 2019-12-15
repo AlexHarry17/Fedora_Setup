@@ -90,7 +90,6 @@ done
 
 # Install the brave browser
 install_brave_browser() {
-print_good_output "Installing Brave Browser"
 curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
 echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 install_package brave-browser
@@ -240,6 +239,7 @@ Exec=xdotool key --clearmodifiers Super+d' >> ~/.local/share/applications/show-d
 
 # Edit gsettings/tweak settings
 tweak_extension_settings() {
+print_good_output "Tweaking Gnome Settings"
 # Tweak Settings
 gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
 gsettings reset org.gnome.shell.extensions.dash-to-dock dash-max-icon-size
