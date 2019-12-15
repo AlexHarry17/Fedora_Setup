@@ -306,8 +306,8 @@ code_settings
 reboot_countdown
 change_settings
 tweak_extension_settings
-reboot_countdown
 #Remove this script file
 cd $DIRECTORY
 rm $FILE
+reboot_countdown
 
