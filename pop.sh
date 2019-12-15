@@ -303,7 +303,6 @@ install_code
 install_slack
 open_files
 code_settings
-reboot_countdown
 change_settings
 tweak_extension_settings
 #Remove this script file
