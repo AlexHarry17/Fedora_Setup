@@ -96,13 +96,6 @@ echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable ma
 install_package brave-browser
 }
 
-# Install spotify music player
-install_spotify() {
-curl -sS https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add - 
-echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-install_package spotify-client
-}
-
 # Install the jetbrains toolbox
 install_jetbrains_toolbox() {
 mkdir ~/Desktop/Programs/
@@ -144,10 +137,8 @@ install_nvidia() {
 echo -e '\e[36m----------Checking for NVIDIA Graphics ----------\e[m
 '
 if [[ $(lspci | grep -E "VGA|3D") == *"NVIDIA"* ]]; then
-print_good_output "NVIDIA drivers Found"
+print_good_output "NVIDIA Graphics Found"
 install_package system76-cuda-latest system76-cudnn-*.*
-else
-print_good_output "No NVIDIA drivers found"
 fi
 }
 
@@ -160,17 +151,6 @@ gunzip linux-brprinter-installer-*.*.*-*.gz
 sudo bash linux-brprinter-installer-*.*.*-* $BROTHER_MODEL
 rm linux-brprinter-installer* brscan*.deb cupswrapper*.deb mfc*.deb
 fi
-}
-
-
-# Installs slack 
-install_slack() {
-sudo apt update
-print_good_output "Installing Slack"
-cd
-wget "$SLACK"
-sudo dpkg -i slack*.deb
-rm slack*.deb
 }
 
 # Sets up bash config
@@ -577,12 +557,6 @@ print_no_format 'Copy the link address of the "SHA-256 checksum" button link.'
 print_no_format 'Paste link address here:'
 read JETBRAINS_TOOLBOX_CHECKSUM
 
-print_good_output "Slack"
-
-print_no_format_link 'Copy the link address of the "Try again" button link from:' https://slack.com/downloads/instructions/ubuntu
-print_no_format 'Paste link address here:'
-read SLACK
-
 print_good_output "Github Setup"
 print_no_format "What is your name?:"
 read GITHUB_USER_NAME
@@ -598,11 +572,9 @@ remove_package gwenview imagemagick akregator kmail konqueror kopete dragonplaye
 install_package xdotool gparted tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
 install_package_license_aggrements code spotify-client slack-desktop
 install_brave_browser
-# install_spotify
 install_jetbrains_toolbox
 install_nvidia
 install_brother_printer
-install_slack
 open_files
 code_settings
 change_settings
