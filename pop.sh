@@ -596,7 +596,7 @@ remove_package gedit gnome-weather firefox geary
 install_package kde-plasma-desktop redshift plasma-applet-redshift-control
 remove_package gwenview imagemagick akregator kmail konqueror kopete dragonplayer kwrite kcalc kate juk
 install_package xdotool gparted tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
-install_package_license_aggrements code spotify-client
+install_package_license_aggrements code spotify-client slack-desktop
 install_brave_browser
 # install_spotify
 install_jetbrains_toolbox
