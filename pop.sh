@@ -77,16 +77,17 @@ sudo apt install $package -y
 done
 }
 
-# Installs all packages passed into no recommends with the --no-install-recommends flag
-install_package_no_recommends() {
+# Install packages with license agreements
+install_package_license_aggrements() {
 # source for $@: https://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script, user Robert Gamble
 for package in "$@"
 do
 sudo apt update
 print_good_output "Installing package $package"
-sudo apt install $package -y --no-install-recommends
+sudo apt install $package
 done
 }
+
 
 # Install the brave browser
 install_brave_browser() {
@@ -161,10 +162,6 @@ rm linux-brprinter-installer* brscan*.deb cupswrapper*.deb mfc*.deb
 fi
 }
 
-# Installs VS Code snap package
-install_code() {
-sudo snap install code --classic
-}
 
 # Installs slack 
 install_slack() {
@@ -263,7 +260,7 @@ gsettings set org.gnome.desktop.privacy remove-old-trash-files true
 gsettings set org.gnome.desktop.privacy remove-old-temp-files true
 gsettings set org.gnome.desktop.peripherals.touchpad click-method areas
 gsettings set org.gnome.shell enabled-extensions "['alt-tab-raise-first-window@system76.com', 'always-show-workspaces@system76.com', 'batteryiconfix@kylecorry31.github.io', 'donotdisturb@kylecorry31.github.io', 'pop-shop-details@system76.com', 'pop-suspend-button@system76.com', 'system76-power@system76.com', 'ubuntu-dock@ubuntu.com']"
-gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'thunderbird.desktop', 'spotify.desktop', 'slack.desktop', 'jetbrains-toolbox.desktop', 'code_code.desktop', 'org.gnome.Nautilus.desktop', 'show-desktop.desktop']"
+gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'thunderbird.desktop', 'spotify.desktop', 'slack.desktop', 'jetbrains-toolbox.desktop', 'code.desktop', 'org.gnome.Nautilus.desktop', 'show-desktop.desktop']"
 }
 
 print_good_output "Lets Get Started!"
@@ -292,10 +289,10 @@ read GITHUB_USER_EMAIL
 brother_printer_setup
 initial_package_upgrade
 remove_package gedit gnome-weather firefox geary
-install_package xdotool gparted snapd tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
-install_package_no_recommends tlp tlp-rdw 
+install_package xdotool gparted tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
+install_package_license_aggrements code spotify-client
 install_brave_browser
-install_spotify
+# install_spotify
 install_jetbrains_toolbox
 install_nvidia
 install_brother_printer
