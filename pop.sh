@@ -199,7 +199,7 @@ cd $PROGRAM_FOLDER/jetbrains*
 sleep 2
 xdotool windowminimize $(xdotool getactivewindow)
 cd
-snap run code
+code
 sleep 4
 xdotool windowminimize $(xdotool getactivewindow)
 }
