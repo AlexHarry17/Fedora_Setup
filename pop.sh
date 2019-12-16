@@ -579,6 +579,7 @@ open_files
 code_settings
 change_settings
 tweak_extension_settings
+kde_settings
 git_config
 setup_bash
 #Remove this script file
