@@ -176,11 +176,11 @@ sed -i -e "s/export BASH_IT_THEME='bobby'/export BASH_IT_THEME='powerline-plain'
 open_files() {
 cd $PROGRAM_FOLDER/jetbrains*
 ./jetbrains-tool*
-sleep 2
+sleep 5
 xdotool windowminimize $(xdotool getactivewindow)
 cd
 code
-sleep 4
+sleep 5
 xdotool windowminimize $(xdotool getactivewindow)
 }
 
