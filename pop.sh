@@ -298,7 +298,7 @@ brother_printer_setup
 initial_package_upgrade
 remove_package gedit gnome-weather firefox geary
 
-if [ kde_desktop = 'y' ]
+if [ kde_desktop = 'y' ]; then
 install_package kde-plasma-desktop
 remove_package gwenview imagemagick akregator kmail kopete dragonplayer kcalc kate juk
 fi
