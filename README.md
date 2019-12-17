@@ -21,7 +21,6 @@ To run this script:
 * gnome-tweaks 
 * gparted
 * Jetbrains Toolbox
-* kde-plasma-desktop
 * libappindicator1 
 * libdbusmenu-gtk4 
 * plasma-applet-redshift-control
@@ -34,25 +33,30 @@ To run this script:
 * thunderbird 
 * xdotool
 
+If requested:
+* kde-plasma-desktop
 
 If the machine has a Nvidia Graphics Card:
 * system76-cuda-latest
 * system76-cudnn-\*.\*
 
 # Packages Removed
-* akregator 
-* dragonplayer 
 * firefox 
 * geary
 * gedit 
 * gnome-weather 
-* gwenview 
-* imagemagick 
+
+If KDE Desktop is installed:
+* akregator
+* dragonplayer
+* gwenview
+* imagemagick
 * juk
-* kate 
-* kcalc 
-* kmail 
-* kopete 
+* kate
+* kcalc
+* kmail
+* kopete
+
 
 # Settings and configurations
 The script changes following settings and configurations on the system.
@@ -91,4 +95,4 @@ The script changes following settings and configurations on the system.
 * Sets the favorite bar to display Brave, Thunderbird, Spotify, Jetbrains Toolbox, VS Code, Files, and Show desktop icons.
 
 ## KDE
-* Changes the theme to "Breeze Dark"
+* Sets theme to "Breeze Dark"
