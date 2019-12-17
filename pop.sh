@@ -54,7 +54,7 @@ print_no_format 'Enter your printer model:'
 read BROTHER_MODEL
 break
 fi
-if [[ $brother_printer = 'n' ]] || [[ -z $brother_printer ]] || $brother_printer = 'N'; then
+if [[ $brother_printer = 'n' ]] || [[ -z $brother_printer ]] || [[ $brother_printer = 'N' ]]; then
 break
 else
 print_error_output "Enter 'y' for yes or 'n' for no"
