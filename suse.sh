@@ -2,6 +2,8 @@
 DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 FILE=$(basename $BASH_SOURCE) 
 cd
+mkdir ~/Desktop/Programs/
+PROGRAM_FOLDER='Desktop/Programs/'
 
 print_good_output () {
 echo -e "
@@ -53,7 +55,7 @@ print_good_output "Upgrading packages"
 sudo zypper dup -y
 }
 
-git_lfs() {
+install_git_lfs() {
 wget "$GIT_LFS"
 tar -xvf git-lfs*.tar.gz
 sudo bash install.sh
@@ -106,9 +108,8 @@ done
 
 if [[ $accepted = 'yes' ]]; then
 if [[ $2 = 'Spotify' ]]; then
-install_snapd
 print_no_format "Installing Spotify"
-sudo snap install spotify
+install_snap_software spotify
 elif [[ $2 = 'Visual Studio Code' ]]; then
 install_code
 elif [[ $2 = 'nvidia-tumbleweed' ]]; then
@@ -142,9 +143,6 @@ sudo systemctl start snapd.apparmor
 
 # Install the jetbrains toolbox
 install_jetbrains_toolbox() {
-mkdir ~/Desktop/Programs/
-
-PROGRAM_FOLDER='Desktop/Programs/'
 
 print_good_output "Installing Jetbrains Toolbox"
 
@@ -165,6 +163,30 @@ print_error_output "Jetbrains toolbox will not install."
 fi
 
 rm jetbrains*.tar.gz* jetbrains*.sha256*
+}
+
+# Install Anaconda
+install_anaconda() {
+print_good_output "Installing Anaconda"
+
+# Get Jetbrains toolbox
+wget "$ANACONDA" -P $PROGRAM_FOLDER
+wget "$ANACONDA_CHECKSUM" -P $PROGRAM_FOLDER
+
+cd $PROGRAM_FOLDER
+
+# Verify Anaconda checksum
+if [[ "$(echo "$ANACONDA_CHECKSUM Anaconda*.sh" | sha256sum --check 
+)" == "Anaconda"*".sh"*"OK" ]]; then
+print_good_output "Anaconda checksum OK"
+bash Anaconda*.sh
+
+else
+print_error_output "BAD ANACONDA CHECKSUM"
+print_error_output "Anaconda will not install."
+fi
+
+rm Anaconda*.sh
 }
 
 # Configures the git config settings
@@ -253,12 +275,8 @@ kde_settings() {
 lookandfeeltool -a 'org.kde.breezedark.desktop'
 }
 
-#Install slack
-install_slack() {
-print_good_output "Installing Slack"
-wget "$SLACK"
-sudo rpm -i slack*.rpm
-rm slack*.rpm
+install_snap_software() {
+sudo snap install $1 $2
 }
 print_good_output "Lets Get Started!"
 print_good_output "Jetbrains Toolbox"
@@ -270,10 +288,15 @@ print_no_format 'Copy the link address of the "SHA-256 checksum" button link.'
 print_no_format 'Paste link address here:'
 read JETBRAINS_TOOLBOX_CHECKSUM
 
-print_good_output "Slack"
-print_no_format_link 'Copy the link address of the "Try again" button link from:' https://slack.com/downloads/instructions/fedora
+print_good_output "Anaconda"
+print_no_format_link 'Copy the link address of the "Download" button link from:' https://www.anaconda.com/distribution/#linux
 print_no_format 'Paste link address here:'
-read SLACK
+read ANACONDA
+
+print_no_format_link 'Copy the sha256 of the your appropriate Anaconda download.' https://docs.anaconda.com/anaconda/install/hashes/lin-3-64/
+print_no_format 'Paste sha256 here:'
+read ANACONDA_CHECKSUM
+
 
 print_good_output "GIT-LFS"
 print_no_format_link 'Copy the link address of the "Download v*.*.* (Linux)" button link from:' https://git-lfs.github.com/
@@ -289,12 +312,14 @@ read GITHUB_USER_EMAIL
 
 brother_printer_setup
 update_package
-remove_package MozillaFirefox kmahjongg kpat kreversi kmines ksudoku akregator kmail vlc kcm_tablet
-install_package xdotool libappindicator-gtk3 curl scribus libappindicator1 MozillaThunderbird chromium dkms
+remove_package MozillaFirefox kmahjongg kpat kreversi kmines ksudoku akregator kmail kcm_tablet
+install_snapd
+install_package xdotool curl scribus libXcomposite1 libXi6 libXext6 libXau6 libX11-6 libXrandr2 libXrender1 libXss1 libXtst6 libXdamage1 libXcursor1 libxcb1 libasound2  libX11-xcb1 Mesa-libGL1 Mesa-libEGL1 libappindicator1 MozillaThunderbird chromium dkms
 install_package_license_aggrements spotify-client "Spotify" https://www.spotify.com/us/legal/end-user-agreement/ 
 install_package_license_aggrements code "Visual Studio Code" https://code.visualstudio.com/License
-install_slack
-git_lfs
+install_anaconda
+install_git_lfs
+install_snap_software slack --classic
 install_jetbrains_toolbox
 install_nvidia
 install_brother_printer
