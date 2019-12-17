@@ -6,7 +6,7 @@ To run this script:
 
 1. Copy the script into the gedit text editor.
 2. Save the script as pop.sh
-3. Navigate the the directory of the script.  Change the permissions with the command `chmod u+x pop.sh`
+3. Navigate to the directory of the script.  Change the permissions with the command `chmod u+x pop.sh`
 4. Run the script with `./pop.sh`
 
 # Packages installed
