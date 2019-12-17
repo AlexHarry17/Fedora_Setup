@@ -79,7 +79,7 @@ done
 install_package_license_aggrements() {
 # source for $@: https://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script, user Robert Gamble
 accepted=''
-while [[ $accepted != 'yes' || $accepted != 'no' ]]
+while [[ $accepted != 'yes' || $accepted != 'no' ]]; do
 echo "$2 Requires Accepting a License"
 echo "You must read and accept this license to install and use $2"
 echo "If you do not accept, $2 will not be installed"
