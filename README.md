@@ -52,9 +52,7 @@ If the machine has a Nvidia Graphics Card:
 * kate 
 * kcalc 
 * kmail 
-* konqueror 
 * kopete 
-* kwrite 
 
 # Settings and configurations
 The script changes following settings and configurations on the system.
