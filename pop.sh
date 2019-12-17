@@ -177,7 +177,7 @@ fi
 
 # Runs through the brother printer installer
 install_brother_printer() {
-if [ $brother_printer = 'y' ]; then
+if [[ $brother_printer = 'y' ]]; then
 print_good_output "Installing Brother Printer"
 wget "$BROTHER_DRIVER"
 gunzip linux-brprinter-installer-*.*.*-*.gz
