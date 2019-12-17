@@ -148,16 +148,16 @@ wget "$JETBRAINS_TOOLBOX_CHECKSUM" -P $PROGRAM_FOLDER
 cd $PROGRAM_FOLDER
 
 # Verify Jetbrains toolbox checksum
-if [[ "$(sha256sum -c jetbrains*.sha256)" == "jetbrains-toolbox"*"OK" ]]; then
+if [[ "$(sha256sum -c jetbrains*.sha256*)" == "jetbrains-toolbox"*"OK" ]]; then
 print_good_output "Jetbrains checksum OK"
-tar -xvf jetbrains*.tar.gz
+tar -xvf jetbrains*.tar.gz*
 
 else
 print_error_output "BAD JETBRAINS CHECKSUM"
 print_error_output "Jetbrains toolbox will not install."
 fi
 
-rm jetbrains*.tar.gz jetbrains*.sha256
+rm jetbrains*.tar.gz* jetbrains*.sha256*
 }
 
 # Configures the git config settings
