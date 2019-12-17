@@ -65,14 +65,14 @@ The script changes following settings and configurations on the system.
 * Sets credential.helper timout to 3600 seconds
 
 ## bash
-* Uses [Bash-it](https://github.com/Bash-it/bash-it) for color scheme.
+* Uses [Bash-it](https://github.com/Bash-it/bash-it) color scheme.
 * Sets the Bash-it theme to "powerline-plain"
 * Sets the cursor a blinking ibeam
 
 ## VS Code
 * Sets autosave to "afterDelay"
 * Disables crash reporter
-* disables telemetry
+* Disables telemetry
 * Sets color scheme to "Monokai"
 
 ## Gnome
@@ -81,7 +81,7 @@ The script changes following settings and configurations on the system.
 * Auto hides the dock to the bottem center of the screen
 * Removes the trash icon from favorites
 * Removes mounts icon from favorites
-* Enables nightlight to run at all times
+* Enables night light to run at all times
 * Sets night light a temperature of 4000
 * Changes the theme to "Pop-dark"
 * Disables animations
