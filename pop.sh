@@ -45,7 +45,7 @@ while true;
 do
 print_no_format "Do you want to set up a Brother Printer? [y/N]"
 read brother_printer
-if [ $brother_printer = 'y' ]; then
+if [[ $brother_printer = 'y' ]]; then
 brother_printer='y'
 print_no_format_link 'Vist the following link. Search for your model.  Choose the "Driver Install Tool".  Read and agree to the license. Copy the link address of "If your download does not start automatically, please click here.":' 'https://support.brother.com/g/b/productsearch.aspx?c=us&lang=en&content=dl'
 print_no_format 'Paste link address here:'
@@ -54,7 +54,7 @@ print_no_format 'Enter your printer model:'
 read BROTHER_MODEL
 break
 fi
-if [[ $brother_printer = 'n'  || -z $brother_printer ]]; then
+if [[ $brother_printer = 'n' ]] || [[ -z $brother_printer ]] || $brother_printer = 'N'; then
 break
 else
 print_error_output "Enter 'y' for yes or 'n' for no"
