@@ -209,10 +209,10 @@ sed -i -e "s/export BASH_IT_THEME='bobby'/export BASH_IT_THEME='powerline-plain'
 open_files() {
 cd ~/$PROGRAM_FOLDER/jetbrains*
 ./jetbrains-tool*
-sleep 5
+sleep 3
 xdotool windowminimize $(xdotool getactivewindow)
 code
-sleep 5
+sleep 6
 xdotool windowminimize $(xdotool getactivewindow)
 }
 
@@ -275,6 +275,10 @@ gsettings set org.gnome.shell enabled-extensions "['alt-tab-raise-first-window@s
 gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'thunderbird.desktop', 'spotify.desktop', 'slack.desktop', 'jetbrains-toolbox.desktop', 'code.desktop', 'org.gnome.Nautilus.desktop', 'show-desktop.desktop']"
 }
 
+kde_settings() {
+lookandfeeltool -a 'org.kde.breezedark.desktop'
+}
+
 
 print_good_output "Lets Get Started!"
 kde_wanted
@@ -301,6 +305,7 @@ remove_package gedit gnome-weather firefox geary
 if [ kde_desktop = 'y' ]; then
 install_package kde-plasma-desktop
 remove_package gwenview imagemagick akregator kmail kopete dragonplayer kcalc kate juk
+kde_settings
 fi
 
 install_package xdotool gparted slack-desktop redshift plasma-applet-redshift-control tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
@@ -314,7 +319,6 @@ open_files
 code_settings
 change_settings
 tweak_extension_settings
-kde_settings
 git_config
 setup_bash
 #Remove this script file
