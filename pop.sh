@@ -77,21 +77,32 @@ done
 
 # Install packages with license agreements
 install_package_license_aggrements() {
-# source for $@: https://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script, user Robert Gamble
 accepted=''
 while [[ $accepted != 'yes' || $accepted != 'no' ]]; do
-echo "$2 Requires Accepting a License"
-echo "You must read and accept this license to install and use $2"
-echo "If you do not accept, $2 will not be installed"
-echo "Read the $2 license:" $3
-echo "I've read and accept the $2 license: [yes/no]"
+print_no_format "
+$2 Requires Accepting a License."
+print_no_format "
+You must read and accept this license to install and use $2."
+print_no_format "
+If you do not accept, $2 will not be installed."
+print_no_format_link "
+Read the $2 license:" $3
+print_no_format "
+I've read and accept the $2 license: [yes/no]"
 read accepted
+if [[ $accepted = 'yes' || $accepted = 'no' ]]; then
+break
+else
+print_error_output "You must type 'yes' or 'no' to the $2 license"
+fi
 done
 
 if [ $accepted = 'yes' ]; then
 sudo apt update
 print_good_output "Installing package $1"
 sudo apt install $1
+else
+print_error_output "$2 will not be installed"
 fi
 }
 
@@ -277,7 +288,7 @@ brother_printer_setup
 initial_package_upgrade
 remove_package gedit gnome-weather firefox geary
 install_package kde-plasma-desktop
-remove_package gwenview imagemagick akregator kmail konqueror kopete dragonplayer kwrite kcalc kate juk
+remove_package gwenview imagemagick akregator kmail kopete dragonplayer kcalc kate juk
 install_package xdotool gparted slack-desktop redshift plasma-applet-redshift-control tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
 install_package_license_aggrements spotify-client "Spotify" https://www.spotify.com/us/legal/end-user-agreement/ 
 install_package_license_aggrements code "Visual Studio Code" https://code.visualstudio.com/License
