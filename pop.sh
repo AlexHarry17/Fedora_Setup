@@ -88,7 +88,7 @@ echo "I've read and accept the $2 license: [yes/no]"
 read accepted
 done
 
-if [ $accepted = 'yes' ]
+if [ $accepted = 'yes' ]; then
 sudo apt update
 print_good_output "Installing package $1"
 sudo apt install $1
