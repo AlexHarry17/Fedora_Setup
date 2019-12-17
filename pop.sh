@@ -30,7 +30,7 @@ while true;
 do
 print_no_format "Do you want to install KDE Desktop? [y/N]"
 read kde_desktop
-if [[[ $kde_desktop = 'y' || $kde_desktop = 'n'  || -z $kde_desktop ]]]; then
+if [[ $kde_desktop = 'y' ]] || [[ $kde_desktop = 'n' ]] || [[ -z $kde_desktop ]] || [[ $kde_desktop = 'N' ]] ; then
 break
 else
 print_error_output "Enter 'y' for yes or 'n' for no"
