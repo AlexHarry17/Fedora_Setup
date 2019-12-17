@@ -1,8 +1,6 @@
 #!/bin/bash
 DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 FILE=$(basename $BASH_SOURCE) 
-cd ~/.config
-mkdir autostart
 cd
 
 print_good_output () {
@@ -26,13 +24,28 @@ print_no_format() {
 }
 
 # Brother Printer Setup
+kde_wanted () {
+kde_desktop=''
+while true;
+do
+print_no_format "Do you want to install KDE Desktop? [y/N]"
+read kde_desktop
+if [[ $kde_desktop = 'y' ]] || [[ $kde_desktop = 'n' ]] || [[ -z $kde_desktop ]] || [[ $kde_desktop = 'N' ]] ; then
+break
+else
+print_error_output "Enter 'y' for yes or 'n' for no"
+fi
+done
+}
+
+# Brother Printer Setup
 brother_printer_setup () {
 brother_printer=''
 while true;
 do
-print_no_format "Do you want to set up a Brother Printer? [n/Y]"
+print_no_format "Do you want to set up a Brother Printer? [y/N]"
 read brother_printer
-if [[ $brother_printer = 'y' || -z $brother_printer ]]; then
+if [[ $brother_printer = 'y' ]]; then
 brother_printer='y'
 print_no_format_link 'Vist the following link. Search for your model.  Choose the "Driver Install Tool".  Read and agree to the license. Copy the link address of "If your download does not start automatically, please click here.":' 'https://support.brother.com/g/b/productsearch.aspx?c=us&lang=en&content=dl'
 print_no_format 'Paste link address here:'
@@ -41,7 +54,7 @@ print_no_format 'Enter your printer model:'
 read BROTHER_MODEL
 break
 fi
-if [ $brother_printer = 'n' ]; then
+if [[ $brother_printer = 'n' ]] || [[ -z $brother_printer ]] || $brother_printer = 'N'; then
 break
 else
 print_error_output "Enter 'y' for yes or 'n' for no"
@@ -79,13 +92,33 @@ done
 
 # Install packages with license agreements
 install_package_license_aggrements() {
-# source for $@: https://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script, user Robert Gamble
-for package in "$@"
-do
-sudo apt update
-print_good_output "Installing package $package"
-sudo apt install $package
+accepted=''
+while [[ $accepted != 'yes' || $accepted != 'no' ]]; do
+print_no_format "
+$2 Requires Accepting a License."
+print_no_format "
+You must read and accept this license to install and use $2."
+print_no_format "
+If you do not accept, $2 will not be installed."
+print_no_format_link "
+Read the $2 license:" $3
+print_no_format "
+I've read and accept the $2 license: [yes/no]"
+read accepted
+if [[ $accepted = 'yes' || $accepted = 'no' ]]; then
+break
+else
+print_error_output "You must type 'yes' or 'no' to the $2 license"
+fi
 done
+
+if [ $accepted = 'yes' ]; then
+sudo apt update
+print_good_output "Installing package $1"
+sudo apt install $1
+else
+print_error_output "$2 will not be installed"
+fi
 }
 
 
@@ -94,13 +127,6 @@ install_brave_browser() {
 curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
 echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 install_package brave-browser
-}
-
-# Install spotify music player
-install_spotify() {
-curl -sS https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add - 
-echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-install_package spotify-client
 }
 
 # Install the jetbrains toolbox
@@ -118,7 +144,7 @@ wget "$JETBRAINS_TOOLBOX_CHECKSUM" -P $PROGRAM_FOLDER
 cd $PROGRAM_FOLDER
 
 # Verify Jetbrains toolbox checksum
-if [[ "$(sha256sum -c jetbrains*.sha256)" == *"OK" ]]; then
+if [[ "$(sha256sum -c jetbrains*.sha256)" == "jetbrains-toolbox"*"OK" ]]; then
 print_good_output "Jetbrains checksum OK"
 tar -xvf jetbrains*.tar.gz
 
@@ -144,33 +170,20 @@ install_nvidia() {
 echo -e '\e[36m----------Checking for NVIDIA Graphics ----------\e[m
 '
 if [[ $(lspci | grep -E "VGA|3D") == *"NVIDIA"* ]]; then
-print_good_output "NVIDIA drivers Found"
+print_good_output "NVIDIA Graphics Found"
 install_package system76-cuda-latest system76-cudnn-*.*
-else
-print_good_output "No NVIDIA drivers found"
 fi
 }
 
 # Runs through the brother printer installer
 install_brother_printer() {
-if [ $brother_printer = 'y' ]; then
+if [[ $brother_printer = 'y' ]]; then
 print_good_output "Installing Brother Printer"
 wget "$BROTHER_DRIVER"
 gunzip linux-brprinter-installer-*.*.*-*.gz
 sudo bash linux-brprinter-installer-*.*.*-* $BROTHER_MODEL
 rm linux-brprinter-installer* brscan*.deb cupswrapper*.deb mfc*.deb
 fi
-}
-
-
-# Installs slack 
-install_slack() {
-sudo apt update
-print_good_output "Installing Slack"
-cd
-wget "$SLACK"
-sudo dpkg -i slack*.deb
-rm slack*.deb
 }
 
 # Sets up bash config
@@ -194,13 +207,12 @@ sed -i -e "s/export BASH_IT_THEME='bobby'/export BASH_IT_THEME='powerline-plain'
 
 # Opens jetbrains-toolbox to create icon launcher.  Opens code to configure settings.
 open_files() {
-cd $PROGRAM_FOLDER/jetbrains*
+cd ~/$PROGRAM_FOLDER/jetbrains*
 ./jetbrains-tool*
-sleep 2
+sleep 3
 xdotool windowminimize $(xdotool getactivewindow)
-cd
 code
-sleep 4
+sleep 6
 xdotool windowminimize $(xdotool getactivewindow)
 }
 
@@ -263,7 +275,13 @@ gsettings set org.gnome.shell enabled-extensions "['alt-tab-raise-first-window@s
 gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'thunderbird.desktop', 'spotify.desktop', 'slack.desktop', 'jetbrains-toolbox.desktop', 'code.desktop', 'org.gnome.Nautilus.desktop', 'show-desktop.desktop']"
 }
 
+kde_settings() {
+lookandfeeltool -a 'org.kde.breezedark.desktop'
+}
+
+
 print_good_output "Lets Get Started!"
+kde_wanted
 print_good_output "Jetbrains Toolbox"
 print_no_format_link 'Copy the link address of the "direct link" button link from:' https://www.jetbrains.com/toolbox-app/download/download-thanks.html
 print_no_format 'Paste link address here:'
@@ -272,12 +290,6 @@ read JETBRAINS_TOOLBOX
 print_no_format 'Copy the link address of the "SHA-256 checksum" button link.'
 print_no_format 'Paste link address here:'
 read JETBRAINS_TOOLBOX_CHECKSUM
-
-print_good_output "Slack"
-
-print_no_format_link 'Copy the link address of the "Try again" button link from:' https://slack.com/downloads/instructions/ubuntu
-print_no_format 'Paste link address here:'
-read SLACK
 
 print_good_output "Github Setup"
 print_no_format "What is your name?:"
@@ -289,15 +301,20 @@ read GITHUB_USER_EMAIL
 brother_printer_setup
 initial_package_upgrade
 remove_package gedit gnome-weather firefox geary
-install_package xdotool gparted tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
-install_package_license_aggrements code spotify-client
+
+if [ kde_desktop = 'y' ]; then
+install_package kde-plasma-desktop
+remove_package gwenview imagemagick akregator kmail kopete dragonplayer kcalc kate juk
+kde_settings
+fi
+
+install_package xdotool gparted slack-desktop redshift plasma-applet-redshift-control tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
+install_package_license_aggrements spotify-client "Spotify" https://www.spotify.com/us/legal/end-user-agreement/ 
+install_package_license_aggrements code "Visual Studio Code" https://code.visualstudio.com/License
 install_brave_browser
-# install_spotify
 install_jetbrains_toolbox
 install_nvidia
 install_brother_printer
-install_code
-install_slack
 open_files
 code_settings
 change_settings
