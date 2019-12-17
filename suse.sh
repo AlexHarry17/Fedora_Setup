@@ -53,6 +53,13 @@ print_good_output "Upgrading packages"
 sudo zypper dup -y
 }
 
+git_lfs() {
+wget "$GIT_LFS"
+tar -xvf git-lfs*.tar.gz
+sudo bash install.sh
+rm CHANGELOG.md git-lfs install.sh README.md git-lfs*.tar.gz
+}
+
 # Removes all packages passed into the function
 remove_package() {
 # source for $@: https://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script, user Robert Gamble
@@ -268,6 +275,11 @@ print_no_format_link 'Copy the link address of the "Try again" button link from:
 print_no_format 'Paste link address here:'
 read SLACK
 
+print_good_output "GIT-LFS"
+print_no_format_link 'Copy the link address of the "Download v*.*.* (Linux)" button link from:' https://git-lfs.github.com/
+print_no_format 'Paste link address here:'
+read GIT_LFS
+
 print_good_output "Github Setup"
 print_no_format "What is your name?:"
 read GITHUB_USER_NAME
@@ -278,10 +290,11 @@ read GITHUB_USER_EMAIL
 brother_printer_setup
 update_package
 remove_package MozillaFirefox kmahjongg kpat kreversi kmines ksudoku akregator kmail vlc kcm_tablet
-install_package xdotool curl scribus libappindicator1 MozillaThunderbird chromium dkms
+install_package xdotool libappindicator-gtk3 curl scribus libappindicator1 MozillaThunderbird chromium dkms
 install_package_license_aggrements spotify-client "Spotify" https://www.spotify.com/us/legal/end-user-agreement/ 
 install_package_license_aggrements code "Visual Studio Code" https://code.visualstudio.com/License
 install_slack
+git_lfs
 install_jetbrains_toolbox
 install_nvidia
 install_brother_printer
