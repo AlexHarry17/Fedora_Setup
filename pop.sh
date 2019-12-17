@@ -192,7 +192,8 @@ sed -i -e "s/export BASH_IT_THEME='bobby'/export BASH_IT_THEME='powerline-plain'
 
 # Opens jetbrains-toolbox to create icon launcher.  Opens code to configure settings.
 open_files() {
-cd $PROGRAM_FOLDER/jetbrains*
+cd $PROGRAM_FOLDER
+cd jetbrains*
 ./jetbrains-tool*
 sleep 5
 xdotool windowminimize $(xdotool getactivewindow)
