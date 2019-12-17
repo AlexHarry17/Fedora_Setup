@@ -300,15 +300,15 @@ read GITHUB_USER_EMAIL
 
 brother_printer_setup
 initial_package_upgrade
-remove_package gedit gnome-weather firefox geary
+remove_package gnome-weather firefox geary
 
 if [ kde_desktop = 'y' ]; then
-install_package kde-plasma-desktop
-remove_package gwenview imagemagick akregator kmail kopete dragonplayer kcalc kate juk
+install_package kde-plasma-desktop redshift plasma-applet-redshift-control
+remove_package gwenview imagemagick akregator kmail kopete dragonplayer kcalc kate juk 
 kde_settings
 fi
 
-install_package xdotool gparted slack-desktop redshift plasma-applet-redshift-control tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
+install_package xdotool gparted slack-desktop tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
 install_package_license_aggrements spotify-client "Spotify" https://www.spotify.com/us/legal/end-user-agreement/ 
 install_package_license_aggrements code "Visual Studio Code" https://code.visualstudio.com/License
 install_brave_browser

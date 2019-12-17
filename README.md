@@ -22,9 +22,7 @@ To run this script:
 * gparted
 * Jetbrains Toolbox
 * libappindicator1 
-* libdbusmenu-gtk4 
-* plasma-applet-redshift-control
-* redshift 
+* libdbusmenu-gtk4  
 * scribus 
 * slack-desktop
 * spotify-client
@@ -33,8 +31,10 @@ To run this script:
 * thunderbird 
 * xdotool
 
-If requested:
+If KDE desktop is selected:
 * kde-plasma-desktop
+* plasma-applet-redshift-control
+* redshift
 
 If the machine has a Nvidia Graphics Card:
 * system76-cuda-latest
@@ -43,7 +43,6 @@ If the machine has a Nvidia Graphics Card:
 # Packages Removed
 * firefox 
 * geary
-* gedit 
 * gnome-weather 
 
 If KDE Desktop is installed:
