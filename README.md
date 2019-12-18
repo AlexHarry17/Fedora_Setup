@@ -1,5 +1,5 @@
 # Introduction
-This script was written to reduce the time to setup a new installation of Pop!_OS to my preferences.  This script helps automate some mundane tasks such as setting up the git config file and disabling telemetry from VS Code. 
+This script was written to reduce the time to setup a new installation of Pop!_OS to my preferences.  This script helps automate some mundane tasks such as setting up the .gitconfig file and disabling telemetry from VS Code. 
 
 # Running the script on a fresh install of Pop!_OS
 To run this script:
