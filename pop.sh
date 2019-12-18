@@ -248,7 +248,8 @@ echo -e '\e[36m----------Checking for NVIDIA Graphics ----------\e[m
 if [[ $(lspci | grep -E "VGA|3D") == *"NVIDIA"* ]]; then
 print_good_output "NVIDIA Graphics Found"
 install_package system76-cuda-latest system76-cudnn-*.*
-sudo conda create --name tf_gpu tensorflow-gpu 
+if [[ $(conda --version | grep -E "conda *.*.*") == "conda"*.*.* ]]; then
+conda create --name tf_gpu tensorflow-gpu 
 fi
 }
 
