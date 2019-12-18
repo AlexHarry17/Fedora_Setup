@@ -156,6 +156,30 @@ fi
 rm jetbrains*.tar.gz jetbrains*.sha256
 }
 
+# Install Anaconda
+install_anaconda() {
+print_good_output "Installing Anaconda"
+
+# Get Jetbrains toolbox
+wget "$ANACONDA" -P $PROGRAM_FOLDER
+wget "$ANACONDA_CHECKSUM" -P $PROGRAM_FOLDER
+
+cd $PROGRAM_FOLDER
+
+# Verify Anaconda checksum
+if [[ "$(echo "$ANACONDA_CHECKSUM Anaconda*.sh" | sha256sum --check 
+)" == "Anaconda"*".sh"*"OK" ]]; then
+print_good_output "Anaconda checksum OK"
+bash Anaconda*.sh
+
+else
+print_error_output "BAD ANACONDA CHECKSUM"
+print_error_output "Anaconda will not install."
+fi
+
+rm Anaconda*.sh
+}
+
 # Configures the git config settings
 git_config() {
 git config --global user.name "$GITHUB_USER_NAME"
@@ -292,6 +316,15 @@ print_no_format 'Copy the link address of the "SHA-256 checksum" button link.'
 print_no_format 'Paste link address here:'
 read JETBRAINS_TOOLBOX_CHECKSUM
 
+print_good_output "Anaconda"
+print_no_format_link 'Copy the link address of the "Download" button link from:' https://www.anaconda.com/distribution/#linux
+print_no_format 'Paste link address here:'
+read ANACONDA
+
+print_no_format_link 'Copy the sha256 of the your appropriate Anaconda download.' https://docs.anaconda.com/anaconda/install/hashes/lin-3-64/
+print_no_format 'Paste sha256 here:'
+read ANACONDA_CHECKSUM
+
 print_good_output "Github Setup"
 print_no_format "What is your name?:"
 read GITHUB_USER_NAME
@@ -312,6 +345,7 @@ fi
 install_package xdotool gparted slack-desktop tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
 install_package_license_aggrements spotify-client "Spotify" https://www.spotify.com/us/legal/end-user-agreement/ 
 install_package_license_aggrements code "Visual Studio Code" https://code.visualstudio.com/License
+install_anaconda
 install_brave_browser
 install_jetbrains_toolbox
 install_nvidia
