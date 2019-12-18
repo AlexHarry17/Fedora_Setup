@@ -19,6 +19,8 @@ To run this script:
 * gparted
 * libappindicator1 
 * libdbusmenu-gtk4  
+* python3-distutils 
+* python3-pip
 * synaptic 
 * tensorman 
 * xdotool

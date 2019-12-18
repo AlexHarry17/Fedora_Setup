@@ -133,7 +133,7 @@ done
 
 # Method to install wanted programs
 install_wanted_packages() {
-install_package xdotool gparted tensorman apt-transport-https git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 libappindicator1 gnome-tweaks gnome-shell-extension-ubuntu-dock
+install_package xdotool python3-distutils python3-pip gparted tensorman apt-transport-https git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 libappindicator1 gnome-tweaks gnome-shell-extension-ubuntu-dock
 install_brave_browser
 install_if_selected $INSTALL_Thunderbird install_package thunderbird
 install_if_selected $INSTALL_Slack install_package slack-desktop
