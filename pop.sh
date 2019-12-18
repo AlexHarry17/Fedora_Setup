@@ -159,15 +159,13 @@ rm jetbrains*.tar.gz jetbrains*.sha256
 # Install Anaconda
 install_anaconda() {
 print_good_output "Installing Anaconda"
-
-# Get Jetbrains toolbox
+cd
+# Get Anaconda
 wget "$ANACONDA" -P $PROGRAM_FOLDER
-wget "$ANACONDA_CHECKSUM" -P $PROGRAM_FOLDER
-
 cd $PROGRAM_FOLDER
 
 # Verify Anaconda checksum
-if [[ "$(echo "$ANACONDA_CHECKSUM Anaconda*.sh" | sha256sum --check 
+if [[ "$(echo "$ANACONDA_CHECKSUM" "Anaconda"*".sh" | sha256sum --check 
 )" == "Anaconda"*".sh"*"OK" ]]; then
 print_good_output "Anaconda checksum OK"
 bash Anaconda*.sh
@@ -196,6 +194,7 @@ echo -e '\e[36m----------Checking for NVIDIA Graphics ----------\e[m
 if [[ $(lspci | grep -E "VGA|3D") == *"NVIDIA"* ]]; then
 print_good_output "NVIDIA Graphics Found"
 install_package system76-cuda-latest system76-cudnn-*.*
+sudo conda create --name tf_gpu tensorflow-gpu 
 fi
 }
 
@@ -236,7 +235,7 @@ cd ~/$PROGRAM_FOLDER/jetbrains*
 sleep 3
 xdotool windowminimize $(xdotool getactivewindow)
 code
-sleep 6
+sleep 3
 xdotool windowminimize $(xdotool getactivewindow)
 }
 
@@ -320,10 +319,13 @@ print_good_output "Anaconda"
 print_no_format_link 'Copy the link address of the "Download" button link from:' https://www.anaconda.com/distribution/#linux
 print_no_format 'Paste link address here:'
 read ANACONDA
-
-print_no_format_link 'Copy the sha256 of the your appropriate Anaconda download.' https://docs.anaconda.com/anaconda/install/hashes/lin-3-64/
+anaconda_version="$(echo "$ANACONDA" | grep -Poe 'Anaconda.*')"
+print_no_format_link 'Copy the sha256 of the your appropriate Anaconda download.' https://docs.anaconda.com/anaconda/install/hashes/"$anaconda_version"-hash/
 print_no_format 'Paste sha256 here:'
 read ANACONDA_CHECKSUM
+# Clear any spaces accidently copied in the checksum
+ANACONDA_CHECKSUM="$(echo "$ANACONDA_CHECKSUM" | grep -Poe '\S.*\S')"
+
 
 print_good_output "Github Setup"
 print_no_format "What is your name?:"
@@ -343,12 +345,12 @@ kde_settings
 fi
 
 install_package xdotool gparted slack-desktop tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
+install_brave_browser
+install_nvidia
+install_jetbrains_toolbox
 install_package_license_aggrements spotify-client "Spotify" https://www.spotify.com/us/legal/end-user-agreement/ 
 install_package_license_aggrements code "Visual Studio Code" https://code.visualstudio.com/License
 install_anaconda
-install_brave_browser
-install_jetbrains_toolbox
-install_nvidia
 install_brother_printer
 open_files
 code_settings
