@@ -6,41 +6,48 @@ To run this script:
 
 1. Copy the script into the gedit text editor.
 2. Save the script as pop.sh
-3. Navigate to the directory of the script.  Change the permissions with the command `chmod u+x pop.sh`
-4. Run the script with `./pop.sh`
+3. Navigate to the directory of the script.  Run `bash pop.sh` in the terminal.
 
 # Packages installed
 * apt-transport-https 
 * Brave browser
-* Brother printer drivers
-* curl 
-* deja-dup 
+* deja-dup
 * gconf2 
 * git-lfs 
 * gnome-shell-extension-ubuntu-dock
 * gnome-tweaks 
 * gparted
-* Jetbrains Toolbox
 * libappindicator1 
 * libdbusmenu-gtk4  
-* scribus 
-* slack-desktop
-* spotify-client
 * synaptic 
 * tensorman 
-* thunderbird 
 * xdotool
 
-If KDE desktop is selected:
-* kde-plasma-desktop
+## Optional installs:
+* Anaconda
+* Brother Printer Driver
+* Jetbrains Toolbox
+* KDE Desktop
+* Scribus
+* Slack
+* Spotify
+* Thunderbird
+* VS Code
+
+
+## If KDE desktop is selected:
 * plasma-applet-redshift-control
 * redshift
 
-If the machine has a Nvidia Graphics Card:
+## If the machine has a NVIDIA GPU:
 * system76-cuda-latest
 * system76-cudnn-\*.\*
 
-# Packages Removed
+## If Anaconda is installed and the machine has a NVIDA GPU:
+* conda tf_gpu
+* conda tensorflow-gpu
+
+# Packages Removed:
 * firefox 
 * geary
 * gnome-weather 
