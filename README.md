@@ -23,7 +23,7 @@ To run this script:
 * tensorman 
 * xdotool
 
-## Optional installs:
+### Optional installs:
 * Anaconda
 * Brother Printer Driver
 * Jetbrains Toolbox
@@ -35,24 +35,24 @@ To run this script:
 * VS Code
 
 
-## If KDE desktop is selected:
+##### If KDE desktop is selected:
 * plasma-applet-redshift-control
 * redshift
 
-## If the machine has a NVIDIA GPU:
+##### If the machine has a NVIDIA GPU:
 * system76-cuda-latest
 * system76-cudnn-\*.\*
 
-## If Anaconda is installed and the machine has a NVIDA GPU:
+##### If Anaconda is installed and the machine has a NVIDA GPU:
 * conda tf_gpu
 * conda tensorflow-gpu
 
-# Packages Removed:
+### Packages Removed:
 * firefox 
 * geary
 * gnome-weather 
 
-If KDE Desktop is installed:
+##### If KDE Desktop is installed:
 * akregator
 * dragonplayer
 * gwenview
@@ -67,23 +67,23 @@ If KDE Desktop is installed:
 # Settings and configurations
 The script changes following settings and configurations on the system.
 
-## gitconfig
+### gitconfig
 * Sets --global user.name
 * Sets --global user.emal
 * Sets credential.helper timout to 3600 seconds
 
-## bash
+### bash
 * Uses [Bash-it](https://github.com/Bash-it/bash-it) color scheme.
 * Sets the Bash-it theme to "powerline-plain"
 * Sets the cursor a blinking ibeam
 
-## VS Code
+### VS Code
 * Sets autosave to "afterDelay"
 * Disables crash reporter
 * Disables telemetry
 * Sets color scheme to "Monokai"
 
-## Gnome
+### Gnome
 * Creates a view desktop command
 * Minimizes open windows by clicking the applications favorite icon
 * Auto hides the dock to the bottem center of the screen
@@ -100,5 +100,5 @@ The script changes following settings and configurations on the system.
 * Sets custom enabled-extensions
 * Sets the favorite bar to display Brave, Thunderbird, Spotify, Jetbrains Toolbox, VS Code, Files, and Show desktop icons.
 
-## KDE
+### KDE
 * Sets theme to "Breeze Dark"
