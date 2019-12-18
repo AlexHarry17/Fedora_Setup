@@ -5,23 +5,26 @@ cd
 mkdir ~/Desktop/Programs/
 PROGRAM_FOLDER='Desktop/Programs/'
 
+# Print formated output
 print_good_output () {
 echo -e "
 \e[36m---------- $1 ----------\e[m
 "
 }
 
-
+# Print red formated output
 print_error_output () {
 echo -e "
 \e[1;31m---------- $1 ----------\033[0m
 "
 }
 
+# Print unformated output with an uncolored link
 print_no_format_link() {
   echo -e "\e[36m$1 \e[m" $2  
 }
 
+# Print unformated output without a link
 print_no_format() {
   echo -en "\e[36m$1 \e[m" 
 }
@@ -124,6 +127,7 @@ sudo apt install $package -y
 done
 }
 
+# Method to install wanted programs
 install_wanted_packages() {
 install_package xdotool gparted tensorman apt-transport-https git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 libappindicator1 gnome-tweaks gnome-shell-extension-ubuntu-dock
 install_brave_browser
@@ -254,6 +258,7 @@ rm linux-brprinter-installer* brscan*.deb cupswrapper*.deb mfc*.deb
 
 }
 
+# Checks if user has chosen a program and runs the command
 install_if_selected() {
 if $1; then
 $2 $3 "$4" "$5"
@@ -350,6 +355,7 @@ gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'thunderb
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 }
 
+# Installs KDE and installs and uninstalls specific packages
 kde_setup() {
 if $INSTALL_KDE_Desktop; then
 install_package kde-plasma-desktop redshift plasma-applet-redshift-control
@@ -358,10 +364,12 @@ kde_settings
 fi
 }
 
+# Changes KDE settings
 kde_settings() {
 lookandfeeltool -a 'org.kde.breezedark.desktop'
 }
 
+# Driver to run the script
 driver() {
 print_good_output "Lets Get Started!"
 programs_wanted "Spotify" "Jetbrains_Toolbox" "Slack" "VS_Code" "Anaconda" "Scribus" "Thunderbird" "KDE_Desktop" "Brother_Printer_Driver"
