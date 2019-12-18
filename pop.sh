@@ -346,12 +346,12 @@ fi
 
 install_package xdotool gparted slack-desktop tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
 install_brave_browser
-install_nvidia
 install_jetbrains_toolbox
 install_package_license_aggrements spotify-client "Spotify" https://www.spotify.com/us/legal/end-user-agreement/ 
 install_package_license_aggrements code "Visual Studio Code" https://code.visualstudio.com/License
 install_anaconda
 install_brother_printer
+install_nvidia
 open_files
 code_settings
 change_settings
