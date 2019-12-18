@@ -47,7 +47,7 @@ To run this script:
 * conda tf_gpu
 * conda tensorflow-gpu
 
-### Packages Removed:
+# What's Removed:
 * firefox 
 * geary
 * gnome-weather 
