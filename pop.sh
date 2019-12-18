@@ -73,18 +73,20 @@ programs_wanted () {
 
 for package in "$@"
 do
-print_no_format "Do you want to install "$package"? [y/N]"
+while true; do
+print_no_format "Do you want to install "$package"? [y/n/N]"
 echo ""
 read choice
 if [[ $choice = 'y' ]]; then
 eval "INSTALL_${package}"=true
-
-elif [[ -z $choice ]] || [[ $choice = 'N' ]] ; then
+break
+elif [[ -z $choice ]] || [[ $choice = 'N' ]] || [[ $choice = 'n' ]] ; then
 eval "INSTALL_${package}"=false
-
+break
 else
-print_error_output "Enter 'y' for yes or 'N' for no"
+print_error_output "Enter 'y' for yes or 'n' for no"
 fi
+done
 done
 }
 
@@ -121,9 +123,11 @@ install_package() {
 # source for $@: https://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script, user Robert Gamble
 for package in "$@"
 do
+if [[ "$package" != '' ]]; then
 sudo apt update
 print_good_output "Installing package $package"
 sudo apt install $package -y
+fi
 done
 }
 
