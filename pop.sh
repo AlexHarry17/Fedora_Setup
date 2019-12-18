@@ -2,12 +2,15 @@
 DIRECTORY="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 FILE=$(basename $BASH_SOURCE) 
 cd
+mkdir ~/Desktop/Programs/
+PROGRAM_FOLDER='Desktop/Programs/'
 
 print_good_output () {
 echo -e "
 \e[36m---------- $1 ----------\e[m
 "
 }
+
 
 print_error_output () {
 echo -e "
@@ -23,43 +26,74 @@ print_no_format() {
   echo -en "\e[36m$1 \e[m" 
 }
 
-# Brother Printer Setup
-kde_wanted () {
-kde_desktop=''
-while true;
+# Get the user input for programs wanted
+user_input() {
+
+if $INSTALL_Jetbrains_Toolbox; then
+print_good_output "Jetbrains Toolbox"
+print_no_format_link 'Copy the link address of the "direct link" button link from:' https://www.jetbrains.com/toolbox-app/download/download-thanks.html
+print_no_format 'Paste link address here:'
+read JETBRAINS_TOOLBOX
+
+print_no_format 'Copy the link address of the "SHA-256 checksum" button link.'
+print_no_format 'Paste link address here:'
+read JETBRAINS_TOOLBOX_CHECKSUM
+fi
+
+if $INSTALL_Anaconda; then
+print_good_output "Anaconda"
+print_no_format_link 'Copy the link address of the "Download" button link from:' https://www.anaconda.com/distribution/#linux
+print_no_format 'Paste link address here:'
+read ANACONDA
+anaconda_version="$(echo "$ANACONDA" | grep -Poe 'Anaconda.*')"
+print_no_format_link 'Copy the sha256 of the your appropriate Anaconda download.' https://docs.anaconda.com/anaconda/install/hashes/"$anaconda_version"-hash/
+print_no_format 'Paste sha256 here:'
+read ANACONDA_CHECKSUM
+# Clear any spaces accidently copied in the checksum
+ANACONDA_CHECKSUM="$(echo "$ANACONDA_CHECKSUM" | grep -Poe '\S.*\S')"
+fi
+
+install_if_selected $INSTALL_Brother_Printer_Driver brother_printer_setup
+
+
+print_good_output "Github Setup"
+print_no_format "What is your name?:"
+read GITHUB_USER_NAME
+
+print_no_format "What is your email?:"
+read GITHUB_USER_EMAIL
+}
+
+
+# Asks user what packages they want installed
+programs_wanted () {
+
+for package in "$@"
 do
-print_no_format "Do you want to install KDE Desktop? [y/N]"
-read kde_desktop
-if [[ $kde_desktop = 'y' ]] || [[ $kde_desktop = 'n' ]] || [[ -z $kde_desktop ]] || [[ $kde_desktop = 'N' ]] ; then
-break
+print_no_format "Do you want to install "$package"? [y/N]"
+echo ""
+read choice
+if [[ $choice = 'y' ]]; then
+eval "INSTALL_${package}"=true
+
+elif [[ -z $choice ]] || [[ $choice = 'N' ]] ; then
+eval "INSTALL_${package}"=false
+
 else
-print_error_output "Enter 'y' for yes or 'n' for no"
+print_error_output "Enter 'y' for yes or 'N' for no"
 fi
 done
 }
 
 # Brother Printer Setup
 brother_printer_setup () {
-brother_printer=''
-while true;
-do
-print_no_format "Do you want to set up a Brother Printer? [y/N]"
-read brother_printer
-if [[ $brother_printer = 'y' ]]; then
-brother_printer='y'
+print_good_output "Brother Printer Setup"
 print_no_format_link 'Vist the following link. Search for your model.  Choose the "Driver Install Tool".  Read and agree to the license. Copy the link address of "If your download does not start automatically, please click here.":' 'https://support.brother.com/g/b/productsearch.aspx?c=us&lang=en&content=dl'
 print_no_format 'Paste link address here:'
 read BROTHER_DRIVER
 print_no_format 'Enter your printer model:'
 read BROTHER_MODEL
-break
-fi
-if [[ $brother_printer = 'n' ]] || [[ -z $brother_printer ]] || [[ $brother_printer = 'N' ]]; then
-break
-else
-print_error_output "Enter 'y' for yes or 'n' for no"
-fi
-done
+
 }
 
 # Upgrades the packages of the freshly installed systems
@@ -90,8 +124,22 @@ sudo apt install $package -y
 done
 }
 
+install_wanted_packages() {
+install_package xdotool gparted tensorman apt-transport-https git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 libappindicator1 gnome-tweaks gnome-shell-extension-ubuntu-dock
+install_brave_browser
+install_if_selected $INSTALL_Thunderbird install_package thunderbird
+install_if_selected $INSTALL_Slack install_package slack-desktop
+install_if_selected $INSTALL_Scribus install_package scribus
+install_if_selected $INSTALL_Jetbrains_Toolbox install_jetbrains_toolbox
+install_if_selected $INSTALL_Spotify install_package_license_agreements spotify-client "Spotify" https://www.spotify.com/us/legal/end-user-agreement/ 
+install_if_selected $INSTALL_VS_Code install_package_license_agreements code "Visual Studio Code" https://code.visualstudio.com/License
+install_if_selected $INSTALL_Anaconda install_anaconda
+install_if_selected $INSTALL_Brother_Printer_Driver install_brother_printer
+install_nvidia
+}
+
 # Install packages with license agreements
-install_package_license_aggrements() {
+install_package_license_agreements() {
 accepted=''
 while [[ $accepted != 'yes' || $accepted != 'no' ]]; do
 print_no_format "
@@ -131,9 +179,7 @@ install_package brave-browser
 
 # Install the jetbrains toolbox
 install_jetbrains_toolbox() {
-mkdir ~/Desktop/Programs/
 
-PROGRAM_FOLDER='Desktop/Programs/'
 
 print_good_output "Installing Jetbrains Toolbox"
 
@@ -200,12 +246,17 @@ fi
 
 # Runs through the brother printer installer
 install_brother_printer() {
-if [[ $brother_printer = 'y' ]]; then
 print_good_output "Installing Brother Printer"
 wget "$BROTHER_DRIVER"
 gunzip linux-brprinter-installer-*.*.*-*.gz
 sudo bash linux-brprinter-installer-*.*.*-* $BROTHER_MODEL
 rm linux-brprinter-installer* brscan*.deb cupswrapper*.deb mfc*.deb
+
+}
+
+install_if_selected() {
+if $1; then
+$2 $3 "$4" "$5"
 fi
 }
 
@@ -299,61 +350,29 @@ gsettings set org.gnome.shell favorite-apps "['brave-browser.desktop', 'thunderb
 gsettings set org.gnome.desktop.interface clock-show-weekday true
 }
 
-kde_settings() {
-lookandfeeltool -a 'org.kde.breezedark.desktop'
-}
-
-
-print_good_output "Lets Get Started!"
-kde_wanted
-print_good_output "Jetbrains Toolbox"
-print_no_format_link 'Copy the link address of the "direct link" button link from:' https://www.jetbrains.com/toolbox-app/download/download-thanks.html
-print_no_format 'Paste link address here:'
-read JETBRAINS_TOOLBOX
-
-print_no_format 'Copy the link address of the "SHA-256 checksum" button link.'
-print_no_format 'Paste link address here:'
-read JETBRAINS_TOOLBOX_CHECKSUM
-
-print_good_output "Anaconda"
-print_no_format_link 'Copy the link address of the "Download" button link from:' https://www.anaconda.com/distribution/#linux
-print_no_format 'Paste link address here:'
-read ANACONDA
-anaconda_version="$(echo "$ANACONDA" | grep -Poe 'Anaconda.*')"
-print_no_format_link 'Copy the sha256 of the your appropriate Anaconda download.' https://docs.anaconda.com/anaconda/install/hashes/"$anaconda_version"-hash/
-print_no_format 'Paste sha256 here:'
-read ANACONDA_CHECKSUM
-# Clear any spaces accidently copied in the checksum
-ANACONDA_CHECKSUM="$(echo "$ANACONDA_CHECKSUM" | grep -Poe '\S.*\S')"
-
-
-print_good_output "Github Setup"
-print_no_format "What is your name?:"
-read GITHUB_USER_NAME
-
-print_no_format "What is your email?:"
-read GITHUB_USER_EMAIL
-
-brother_printer_setup
-initial_package_upgrade
-remove_package gnome-weather firefox geary
-
-if [ kde_desktop = 'y' ]; then
+kde_setup() {
+if $INSTALL_KDE_Desktop; then
 install_package kde-plasma-desktop redshift plasma-applet-redshift-control
 remove_package gwenview imagemagick akregator kmail kopete dragonplayer kcalc kate juk 
 kde_settings
 fi
+}
 
-install_package xdotool gparted slack-desktop tensorman apt-transport-https curl git-lfs deja-dup synaptic gconf2 libdbusmenu-gtk4 scribus libappindicator1 thunderbird gnome-tweaks gnome-shell-extension-ubuntu-dock
-install_brave_browser
-install_jetbrains_toolbox
-install_package_license_aggrements spotify-client "Spotify" https://www.spotify.com/us/legal/end-user-agreement/ 
-install_package_license_aggrements code "Visual Studio Code" https://code.visualstudio.com/License
-install_anaconda
-install_brother_printer
-install_nvidia
+kde_settings() {
+lookandfeeltool -a 'org.kde.breezedark.desktop'
+}
+
+driver() {
+print_good_output "Lets Get Started!"
+programs_wanted "Spotify" "Jetbrains_Toolbox" "Slack" "VS_Code" "Anaconda" "Scribus" "Thunderbird" "KDE_Desktop" "Brother_Printer_Driver"
+
+user_input
+initial_package_upgrade
+remove_package gnome-weather firefox geary
+kde_setup
+install_wanted_packages
 open_files
-code_settings
+install_if_selected $INSTALL_VS_Code code_settings
 change_settings
 tweak_extension_settings
 git_config
@@ -362,4 +381,8 @@ setup_bash
 cd $DIRECTORY
 rm $FILE
 reboot_countdown
+}
+
+
+driver
 
