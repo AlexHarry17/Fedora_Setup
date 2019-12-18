@@ -35,15 +35,15 @@ To run this script:
 * VS Code
 
 
-##### If KDE desktop is selected:
+### If KDE desktop is selected:
 * plasma-applet-redshift-control
 * redshift
 
-##### If the machine has a NVIDIA GPU:
+### If the machine has a NVIDIA GPU:
 * system76-cuda-latest
 * system76-cudnn-\*.\*
 
-##### If Anaconda is installed and the machine has a NVIDA GPU:
+### If Anaconda is installed and the machine has a NVIDA GPU:
 * conda tf_gpu
 * conda tensorflow-gpu
 
@@ -52,7 +52,7 @@ To run this script:
 * geary
 * gnome-weather 
 
-##### If KDE Desktop is installed:
+### If KDE Desktop is installed:
 * akregator
 * dragonplayer
 * gwenview
