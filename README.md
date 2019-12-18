@@ -8,7 +8,7 @@ To run this script:
 2. Save the script as pop.sh
 3. Navigate to the directory of the script.  Run `bash pop.sh` in the terminal.
 
-# Packages installed
+# What's installed
 * apt-transport-https 
 * Brave browser
 * deja-dup
